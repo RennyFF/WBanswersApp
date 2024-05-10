@@ -11,14 +11,25 @@ using System.Windows.Shapes;
 
 namespace WBNEWANSWEARS
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
+            this.FontFamily = new FontFamily("Inter");
             InitializeComponent();
+        }
+
+        private void UIElement_Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

@@ -2,7 +2,80 @@
     x:Class="WBNEWANSWEARS.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:WBNEWANSWEARS"
+    xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
     StartupUri="MainWindow.xaml">
-    <Application.Resources />
+    <Application.Resources>
+        <FontFamily x:Key="Inter">pack://application:,,,/Fonts/#Inter</FontFamily>
+
+        <Style x:Key="menuButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#FFE6E6" />
+            <Setter Property="Height" Value="45" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Margin" Value="15,0,15,5" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFE6FF" />
+                    <Setter Property="Foreground" Value="#8179B3" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="menuButtonIcon" TargetType="Icon:PackIconMaterial">
+            <Setter Property="Margin" Value="25,0,0,0" />
+            <Setter Property="Width" Value="20" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Height" Value="20" />
+            <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" />
+        </Style>
+
+        <Style x:Key="menuButtonText" TargetType="TextBlock">
+            <Setter Property="Margin" Value="20,0,0,2" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" />
+        </Style>
+
+        <Style x:Key="menuButtonClose" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#FFE6E6" />
+            <Setter Property="Height" Value="45" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Margin" Value="15,0,15,15" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FFE6FF" />
+                    <Setter Property="Foreground" Value="PaleVioletRed" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="menuButtonIconClose" TargetType="Icon:PackIconMaterial">
+            <Setter Property="Width" Value="28" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Height" Value="28" />
+            <Setter Property="Foreground" Value="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" />
+        </Style>
+    </Application.Resources>
 </Application>
