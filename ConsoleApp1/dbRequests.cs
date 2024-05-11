@@ -4,13 +4,12 @@ namespace ConsoleApp1
 {
     public class dbRequests
     {
-        private readonly string _connectionStringUsers = "userdata.db";
-        private readonly string _connectionStringAnswers = "answers.db";
+        private readonly string _connectionString = "userdata.db";
         private readonly string _UsersName = "Users";
         private readonly string _AnswersName = "Answers";
         public bool CreateDBUsers()
         {
-            using (var connection = new SQLiteConnection($"Data Source={_connectionStringUsers}"))
+            using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
                 connection.Open();
                 SQLiteCommand command = new();
@@ -33,7 +32,7 @@ namespace ConsoleApp1
         {
             List<UsersStructure> result = new();
 
-            using (var connection = new SQLiteConnection($"Data Source={_connectionStringUsers}"))
+            using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
                 connection.Open();
 
@@ -60,7 +59,7 @@ namespace ConsoleApp1
         }
         public bool AddDBUsers(UsersStructure user)
         {
-            using (var connection = new SQLiteConnection($"Data Source={_connectionStringUsers}"))
+            using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
                 connection.Open();
 
@@ -68,7 +67,7 @@ namespace ConsoleApp1
                 command.Connection = connection;
                 command.CommandText = $"INSERT INTO {_UsersName} (Id, UserName, TokenContent, TokenFeedback, Preset) " +
                                       $"VALUES (@Id, @UserName, @TokenContent, @TokenFeedback, @Preset)";
-                command.Parameters.AddWithValue("@Id", GetLastNewId(_connectionStringUsers, _UsersName));
+                command.Parameters.AddWithValue("@Id", GetLastNewId(_UsersName));
                 command.Parameters.AddWithValue("@UserName", user.UserName);
                 command.Parameters.AddWithValue("@TokenContent", user.TokenContent);
                 command.Parameters.AddWithValue("@TokenFeedback", user.TokenFeedBack);
@@ -88,7 +87,7 @@ namespace ConsoleApp1
 
         public bool UpdateDBUser(UsersStructure user)
         {
-            using (var connection = new SQLiteConnection($"Data Source={_connectionStringUsers}"))
+            using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
                 connection.Open();
 
@@ -115,7 +114,7 @@ namespace ConsoleApp1
 
         public bool CreateDBAnsw()
         {
-            using (var connection = new SQLiteConnection($"Data Source={_connectionStringAnswers}"))
+            using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
                 connection.Open();
                 SQLiteCommand command = new();
@@ -137,7 +136,7 @@ namespace ConsoleApp1
         {
             List<AnswersStructure> result = new();
 
-            using (var connection = new SQLiteConnection($"Data Source={_connectionStringAnswers}"))
+            using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
                 connection.Open();
 
@@ -167,7 +166,7 @@ namespace ConsoleApp1
         }
         public bool AddDBAnsw(AnswersStructure answer)
         {
-            using (var connection = new SQLiteConnection($"Data Source={_connectionStringAnswers}"))
+            using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
                 connection.Open();
 
@@ -175,7 +174,7 @@ namespace ConsoleApp1
                 command.Connection = connection;
                 command.CommandText = $"INSERT INTO Answers (Id, Title, Priority, IsUsed, Pattern, IsRating, TargetRating, Text, UserId) " +
                                       $"VALUES (@Id, @Title, @Priority, @IsUsed, @Pattern, @IsRating, @TargetRating, @Text, @UserId)";
-                command.Parameters.AddWithValue("@Id", GetLastNewId(_connectionStringAnswers, _AnswersName));
+                command.Parameters.AddWithValue("@Id", GetLastNewId(_AnswersName));
                 command.Parameters.AddWithValue("@Title", answer.Title);
                 command.Parameters.AddWithValue("@Priority", answer.Priority);
                 command.Parameters.AddWithValue("@IsUsed", answer.IsUsed ? 1 : 0);
@@ -198,7 +197,7 @@ namespace ConsoleApp1
 
         public bool UpdateDBAnsw(AnswersStructure answer)
         {
-            using (var connection = new SQLiteConnection($"Data Source={_connectionStringAnswers}"))
+            using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
                 connection.Open();
 
@@ -226,7 +225,7 @@ namespace ConsoleApp1
             }
         }
 
-        public bool DeleteRowDB(string _connectionString, string _dbName, int id)
+        public bool DeleteRowDB(string _dbName, int id)
         {
             using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
@@ -249,9 +248,9 @@ namespace ConsoleApp1
             }
         }
 
-        public int GetLastNewId(string _dbConnection, string _dbName)
+        public int GetLastNewId(string _dbName)
         {
-            using (var connection = new SQLiteConnection($"Data Source={_dbConnection}"))
+            using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
                 connection.Open();
 
