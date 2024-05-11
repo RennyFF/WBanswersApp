@@ -2,12 +2,12 @@
 
 namespace ConsoleApp1
 {
-    class dbRequests
+    public class dbRequests
     {
-        public readonly string _connectionStringUsers = "userdata.db";
-        public readonly string _connectionStringAnswers = "answers.db";
-        public readonly string _UsersName = "Users";
-        public readonly string _AnswersName = "Answers";
+        private readonly string _connectionStringUsers = "userdata.db";
+        private readonly string _connectionStringAnswers = "answers.db";
+        private readonly string _UsersName = "Users";
+        private readonly string _AnswersName = "Answers";
         public bool CreateDBUsers()
         {
             using (var connection = new SQLiteConnection($"Data Source={_connectionStringUsers}"))

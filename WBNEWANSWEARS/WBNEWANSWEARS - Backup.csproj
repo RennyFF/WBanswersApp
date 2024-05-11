@@ -52,11 +52,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="MVVM\Model\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ConsoleApp1\ConsoleApp1.csproj" />
+    <Folder Include="Model\" />
+    <Folder Include="Новая папка\" />
   </ItemGroup>
 
 </Project>

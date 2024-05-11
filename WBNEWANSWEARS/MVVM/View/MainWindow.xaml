@@ -4,11 +4,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-    xmlns:local="clr-namespace:WBNEWANSWEARS"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodel="clr-namespace:WBNEWANSWEARS.ViewModel"
     Title="MainWindow"
     Width="1100"
     Height="630"
+    d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
     AllowsTransparency="True"
     Background="Transparent"
     WindowStartupLocation="CenterScreen"
@@ -26,15 +27,17 @@
         </Border.Background>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="220" />
+                <ColumnDefinition Width="240" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
             <!--  MENU  -->
-            <Border Grid.RowSpan="2" CornerRadius="12">
+            <Border
+                Grid.RowSpan="2"
+                Width="220"
+                Margin="0,0,20,0"
+                HorizontalAlignment="Left"
+                CornerRadius="12"
+                Cursor="">
                 <Border.Background>
                     <LinearGradientBrush>
                         <GradientStop Offset="0.6" Color="#8179B3" />
@@ -80,7 +83,7 @@
                             Foreground="#FFE6E6"
                             Text="by Renny">
                             <TextBlock.Effect>
-                                <DropShadowEffect BlurRadius="10" Opacity="0.1" />
+                                <DropShadowEffect BlurRadius="5" Opacity="0" />
                             </TextBlock.Effect>
                         </TextBlock>
                         <TextBlock
@@ -93,40 +96,51 @@
                             Foreground="#FFE6E6"
                             Text="ver 1.0.0">
                             <TextBlock.Effect>
-                                <DropShadowEffect BlurRadius="10" Opacity="0.2" />
+                                <DropShadowEffect BlurRadius="5" Opacity="0" />
                             </TextBlock.Effect>
                         </TextBlock>
                     </StackPanel>
 
                     <!--  Menu Items  -->
-                    <StackPanel Grid.Row="1">
-                        <Button
-                            Background="#FFE6E6"
-                            Foreground="#8179B3"
+                    <StackPanel Grid.Row="1" Cursor="">
+                        <RadioButton
+                            Command="{Binding NavigateHomeCommand}"
+                            GroupName="MenuButtons"
+                            IsChecked="True"
                             Style="{StaticResource menuButton}">
                             <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                 <iconPacks:PackIconMaterial Kind="HomeVariant" Style="{StaticResource menuButtonIcon}" />
                                 <TextBlock Style="{StaticResource menuButtonText}" Text="Главная" />
                             </StackPanel>
-                        </Button>
-                        <Button Style="{StaticResource menuButton}">
+                        </RadioButton>
+                        <RadioButton
+                            Command="{Binding NavigateActiveCommand}"
+                            GroupName="MenuButtons"
+                            Style="{StaticResource menuButton}">
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconMaterial Kind="CodeGreaterThanOrEqual" Style="{StaticResource menuButtonIcon}" />
                                 <TextBlock Style="{StaticResource menuButtonText}" Text="Запуск" />
                             </StackPanel>
-                        </Button>
-                        <Button Style="{StaticResource menuButton}">
+                        </RadioButton>
+                        <RadioButton
+                            Command="{Binding NavigateSettingsCommand}"
+                            GroupName="MenuButtons"
+                            Style="{StaticResource menuButton}">
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconMaterial Kind="CogBox" Style="{StaticResource menuButtonIcon}" />
                                 <TextBlock Style="{StaticResource menuButtonText}" Text="Настройки" />
                             </StackPanel>
-                        </Button>
-                        <Button Style="{StaticResource menuButton}">
+                        </RadioButton>
+                        <RadioButton
+                            Command="{Binding NavigateCommentsCommand}"
+                            Cursor="Hand"
+                            GroupName="MenuButtons"
+                            Style="{StaticResource menuButton}">
                             <StackPanel Orientation="Horizontal">
                                 <iconPacks:PackIconMaterial Kind="MessageBulleted" Style="{StaticResource menuButtonIcon}" />
                                 <TextBlock Style="{StaticResource menuButtonText}" Text="Шаблоны" />
                             </StackPanel>
-                        </Button>
+                        </RadioButton>
                     </StackPanel>
                     <StackPanel Grid.Row="2" VerticalAlignment="Bottom">
                         <Button Click="ButtonBase_OnClick" Style="{StaticResource menuButtonClose}">
@@ -137,6 +151,7 @@
                     </StackPanel>
                 </Grid>
             </Border>
+            <ContentControl Grid.Column="1" Content="{Binding Navigation.CurrentView}" />
         </Grid>
     </Border>
 </Window>
