@@ -56,6 +56,19 @@ namespace WBNEWANSWEARS
             bool isSuccessCreation = false;
             isSuccessCreation = db.CreateDBUsers();
             isSuccessCreation = db.CreateDBAnsw();
+            //UsersStructure us = new UsersStructure();
+            //us.UserName = "SUPER LONG AHAHAHH NICE TRY TO ADAPT";
+            //us.TokenFeedBack = "3";
+            //us.TokenContent = "3";
+            //us.Preset = "3";
+            //db.AddDBUsers(us);
+            //us.UserName = "Ромашов А.С. - GATT";
+            //db.AddDBUsers(us);
+            //us.UserName = "Алексеева М.А.";
+            //db.AddDBUsers(us);
+            //us.UserName = "BeautyReason";
+            //db.AddDBUsers(us);
+            //db.AddDBUsers(us);
             if (isSuccessCreation)
             {
                 USERS = getAllUsersFromDB();

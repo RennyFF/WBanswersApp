@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:WBNEWANSWEARS.MVVM.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:WBNEWANSWEARS.MVVM.ViewModel"
@@ -26,6 +27,53 @@
             <StackPanel Grid.Row="0" VerticalAlignment="Center">
                 <TextBlock Style="{StaticResource HeaderPageTextStyle}" Text="Главная страница" />
             </StackPanel>
+            <ScrollViewer
+                Grid.Row="1"
+                Style="{StaticResource FavsScrollViewer}"
+                VerticalScrollBarVisibility="Auto">
+                <ItemsControl Padding="12" ItemsSource="{Binding Cards}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Border Style="{StaticResource CardStyle}">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="60" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <iconPacks:PackIconMaterial
+                                            Grid.Row="0"
+                                            Width="60"
+                                            Height="60"
+                                            HorizontalAlignment="Center"
+                                            Foreground="#FFE6E6"
+                                            Kind="Account" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Style="{StaticResource CardTextStyle}"
+                                            Text="{Binding UserName}" />
+                                    </Grid>
+                                </Border>
+                                <Border Style="{StaticResource CardUnderSectionStyle}">
+                                    <iconPacks:PackIconMaterial
+                                        Width="28"
+                                        Height="28"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Cursor="Hand"
+                                        Foreground="LimeGreen"
+                                        Kind="PlayBox" />
+                                </Border>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
         </Grid>
     </Border>
 </UserControl>
