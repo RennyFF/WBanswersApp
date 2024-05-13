@@ -368,7 +368,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
                         <Border Background="{TemplateBinding Background}" CornerRadius="10">
-                            <ContentPresenter />
+                            <ContentPresenter Cursor="Hand" />
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
@@ -427,6 +427,7 @@
         <Style x:Key="ActiveViewBottomText" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Cursor" Value="Hand" />
             <Setter Property="FontSize" Value="20" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Foreground" Value="#FFE6E6" />
