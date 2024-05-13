@@ -407,6 +407,32 @@
             </Setter>
         </Style>
 
+        <Style x:Key="ActiveViewCardTextStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="12,0,0,0" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Foreground" Value="#FFE6E6" />
+        </Style>
+
+        <Style x:Key="ActiveViewCardStyle" TargetType="Border">
+            <Setter Property="Margin" Value="0,0,10,12" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Height" Value="auto" />
+            <Setter Property="CornerRadius" Value="5" />
+            <Setter Property="Background" Value="#8179B3" />
+        </Style>
+
+        <Style x:Key="ActiveViewBottomText" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="#FFE6E6" />
+        </Style>
+
+
 
     </Application.Resources>
 </Application>
