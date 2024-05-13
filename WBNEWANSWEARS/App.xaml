@@ -160,7 +160,7 @@
             <Setter Property="Cursor" Value="Hand" />
         </Style>
 
-        <!--ScrollBar style -->
+        <!--  ScrollBar style  -->
 
         <SolidColorBrush x:Key="EslScrollbarThumb" Color="#FFE6E6" />
 
@@ -225,7 +225,7 @@
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <Thumb
-                        Margin="2,22,2,22"
+                        Margin="2,0,2,0"
                         Background="{DynamicResource EslScrollbarThumb}"
                         Style="{StaticResource ScrollBarThumb}" />
                 </Track.Thumb>
@@ -342,5 +342,71 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!--  ActiveView styles  -->
+
+        <Style x:Key="ListBoxCustomStyle" TargetType="ListBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <Border
+                            Margin="15"
+                            Padding="12"
+                            Background="#7469B6"
+                            CornerRadius="10">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ListBoxItemCustomStyle" TargetType="ListBoxItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10">
+                            <ContentPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CustomCheckBoxStyle" TargetType="CheckBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Border
+                            Width="40"
+                            Height="40"
+                            Margin="5"
+                            Background="#69619B"
+                            CornerRadius="5"
+                            Cursor="">
+                            <Grid>
+                                <Path
+                                    x:Name="CheckMark"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="M 2,7 L 7,12 L 20,0"
+                                    Stroke="White"
+                                    StrokeThickness="3"
+                                    Visibility="Collapsed" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
     </Application.Resources>
 </Application>

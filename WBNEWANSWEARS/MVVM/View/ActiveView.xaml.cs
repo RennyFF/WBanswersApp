@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static WBNEWANSWEARS.MVVM.ViewModel.ActiveViewModel;
 
 namespace WBNEWANSWEARS.MVVM.View
 {
@@ -20,6 +21,12 @@ namespace WBNEWANSWEARS.MVVM.View
         public ActiveView()
         {
             InitializeComponent();
+        }
+
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+            MessageBox.Show("ASD");
         }
     }
 }

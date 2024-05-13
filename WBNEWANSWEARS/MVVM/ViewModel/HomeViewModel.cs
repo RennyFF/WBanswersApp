@@ -5,15 +5,16 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
 {
     class HomeViewModel : Core.ViewModel
     {
-        private readonly ObservableCollection<UsersStructure> _cards;
+        private ObservableCollection<UsersStructure> _cards;
         public ObservableCollection<UsersStructure> Cards
         {
-            get { return _cards; }
+            set => _cards = value; 
+            get => _cards; 
         }
 
         public HomeViewModel(List<UsersStructure> users)
         {
-            _cards = new ObservableCollection<UsersStructure>(users);
+            Cards = new ObservableCollection<UsersStructure>(users);
         }
     }
 }

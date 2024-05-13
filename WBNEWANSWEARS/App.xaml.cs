@@ -39,9 +39,9 @@ namespace WBNEWANSWEARS
                 DataContext = provider.GetRequiredService<MainViewModel>()
             });
             services.AddSingleton<MainViewModel>();
-            services.AddSingleton<HomeViewModel>(provider => new HomeViewModel(USERS)); /*??? РАБОТАЕТ ЛИ*/
+            services.AddSingleton<HomeViewModel>(provider => new HomeViewModel(USERS));
             services.AddSingleton<SettingsViewModel>();
-            services.AddSingleton<ActiveViewModel>();
+            services.AddSingleton<ActiveViewModel>(provider => new ActiveViewModel(USERS));
             services.AddSingleton<CommentsViewModel>();
             services.AddSingleton<INavigationService, NavigationService>();
 
