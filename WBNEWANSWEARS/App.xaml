@@ -419,7 +419,6 @@
         <Style x:Key="ActiveViewCardStyle" TargetType="Border">
             <Setter Property="Margin" Value="0,0,10,12" />
             <Setter Property="Height" Value="50" />
-            <Setter Property="Height" Value="auto" />
             <Setter Property="CornerRadius" Value="5" />
             <Setter Property="Background" Value="#8179B3" />
         </Style>
@@ -433,7 +432,217 @@
             <Setter Property="Foreground" Value="#FFE6E6" />
         </Style>
 
+        <!--  SettingsView styles  -->
 
+        <Style x:Key="SettingsListBoxCustomStyle" TargetType="ListBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBox">
+                        <Border Background="#7469B6" CornerRadius="10">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <Style x:Key="usersMenuButton" TargetType="RadioButton">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#FFE6E6" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="Margin" Value="0,0,0,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border
+                            x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="6">
+                            <ContentPresenter
+                                x:Name="insideContent"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="AliceBlue" />
+                                <Setter TargetName="border" Property="BorderThickness" Value="2" />
+                                <Setter Property="TextBlock.Foreground" Value="White" />
+
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+
+                                <Setter Property="TextBlock.Foreground" Value="#FFE6E6" />
+
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="TextBlock.Foreground" Value="White" />
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="AddAndDeleteButtonsBorder" TargetType="Border">
+            <Setter Property="Background" Value="#7469B6" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Padding" Value="10" />
+        </Style>
+
+
+        <Style x:Key="AddAndDeleteButtonsIcon" TargetType="Icon:PackIconMaterial">
+            <Setter Property="Foreground" Value="#FFE6E6" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Width" Value="18" />
+            <Setter Property="Height" Value="18" />
+        </Style>
+
+        <Style x:Key="SettingsViewSmallGrayText" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="Regular" />
+            <Setter Property="Foreground" Value="LightGray" />
+        </Style>
+
+        <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="#7469B6" />
+            <Setter Property="BorderThickness" Value="0,0,0,2" />
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Offset="0.0" Color="Transparent" />
+                        <GradientStop Offset="0.3" Color="#FFE6E6" />
+                        <GradientStop Offset="0.7" Color="#FFE6E6" />
+                        <GradientStop Offset="1" Color="Transparent" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Padding" Value="5,4" />
+            <Setter Property="Cursor" Value="IBeam" />
+            <Setter Property="Width" Value="350" />
+            <Setter Property="MaxWidth" Value="350" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="FontWeight" Value="Regular" />
+            <Setter Property="MaxHeight" Value="40" />
+            <Setter Property="AllowDrop" Value="True" />
+            <Setter Property="Foreground" Value="#FFE6E6" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border
+                            x:Name="txtBorder"
+                            MaxWidth="{TemplateBinding MaxWidth}"
+                            MaxHeight="{TemplateBinding MaxHeight}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="1"
+                            SnapsToDevicePixels="True">
+                            <Grid Margin="{TemplateBinding Padding}">
+                                <ScrollViewer
+                                    x:Name="PART_ContentHost"
+                                    Margin="-2,3"
+                                    Focusable="False"
+                                    HorizontalScrollBarVisibility="Hidden"
+                                    VerticalScrollBarVisibility="Hidden" />
+                                <Label
+                                    x:Name="WaterMarkLabel"
+                                    Padding="{TemplateBinding Padding}"
+                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Content="{TemplateBinding Tag}"
+                                    FontWeight="{TemplateBinding FontWeight}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Visibility="Collapsed" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="Text" Value="" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="WaterMarkLabel" Property="Visibility" Value="Visible" />
+                            </MultiTrigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStop Offset="0.0" Color="Transparent" />
+                                            <GradientStop Offset="0.3" Color="White" />
+                                            <GradientStop Offset="0.7" Color="White" />
+                                            <GradientStop Offset="1" Color="Transparent" />
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStop Offset="0.0" Color="Transparent" />
+                                            <GradientStop Offset="0.3" Color="White" />
+                                            <GradientStop Offset="0.7" Color="White" />
+                                            <GradientStop Offset="1" Color="Transparent" />
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="SettingsCustomCheckBoxStyle" TargetType="CheckBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Border
+                            Width="20"
+                            Height="20"
+                            Margin="5"
+                            Background="#69619B"
+                            CornerRadius="5"
+                            Cursor="">
+                            <Border
+                                x:Name="CheckMark"
+                                Margin="5"
+                                Background="White"
+                                CornerRadius="2"
+                                Visibility="Collapsed" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
     </Application.Resources>
 </Application>

@@ -21,5 +21,6 @@ namespace WBNEWANSWEARS.MVVM.View
         {
             InitializeComponent();
         }
+
     }
 }

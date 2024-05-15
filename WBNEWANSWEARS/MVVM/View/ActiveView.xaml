@@ -119,8 +119,7 @@
                             Margin="10,0,10,0"
                             VerticalAlignment="Center"
                             CornerRadius="5"
-                            Cursor="Hand"
-                            MouseLeftButtonDown="Border_MouseLeftButtonDown">
+                            Cursor="Hand">
                             <iconPacks:PackIconMaterial
                                 Width="18"
                                 Height="18"
