@@ -42,7 +42,7 @@ namespace WBNEWANSWEARS
             services.AddSingleton<HomeViewModel>(provider => new HomeViewModel(USERS));
             services.AddSingleton<SettingsViewModel>(provider => new SettingsViewModel(USERS));
             services.AddSingleton<ActiveViewModel>(provider => new ActiveViewModel(USERS));
-            services.AddSingleton<CommentsViewModel>();
+            services.AddSingleton<CommentsViewModel>(provider => new CommentsViewModel(USERS));
             services.AddSingleton<INavigationService, NavigationService>();
 
             services.AddSingleton<Func<Type, Core.ViewModel>>(serviceProvider =>

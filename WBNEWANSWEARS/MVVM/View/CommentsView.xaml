@@ -3,12 +3,13 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:WBNEWANSWEARS.MVVM.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="clr-namespace:WBNEWANSWEARS.MVVM.ViewModel"
+    d:DataContext="{d:DesignInstance Type=viewModel:CommentsViewModel}"
     d:DesignHeight="590"
     d:DesignWidth="820"
-    d:DataContext="{d:DesignInstance Type=viewModel:CommentsViewModel}"
     mc:Ignorable="d">
     <Border CornerRadius="12">
         <Border.Background>
@@ -18,9 +19,170 @@
             </LinearGradientBrush>
         </Border.Background>
         <Grid>
-            <StackPanel>
-                <TextBlock>MEOW COMMENTS</TextBlock>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" VerticalAlignment="Center">
+                <TextBlock Style="{StaticResource HeaderPageTextStyle}" Text="Шаблоны ответов" />
             </StackPanel>
+            <Border Grid.Row="1" Margin="15,0,15,15">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="0.1*" />
+                    </Grid.RowDefinitions>
+                    <Border
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="0,0,12,0"
+                        Padding="12,12,0,12"
+                        Background="#7469B6"
+                        CornerRadius="12">
+                        <ListBox
+                            d:ItemsSource="{d:SampleData ItemCount=15}"
+                            Background="Transparent"
+                            ItemContainerStyle="{StaticResource ListBoxItemCustomStyle}"
+                            ItemsSource="{Binding Users}"
+                            SelectionMode="Single"
+                            Style="{StaticResource SettingsListBoxCustomStyle}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="215" Style="{StaticResource ActiveViewCardStyle}">
+                                        <RadioButton GroupName="UsersButtons" Style="{StaticResource usersMenuButton}">
+                                            <StackPanel>
+                                                <TextBlock
+                                                    Margin="0"
+                                                    HorizontalAlignment="Center"
+                                                    Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RadioButton}}}"
+                                                    Style="{StaticResource ActiveViewCardTextStyle}"
+                                                    Text="{Binding UserName}"
+                                                    TextTrimming="WordEllipsis" />
+                                            </StackPanel>
+                                        </RadioButton>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                    <Border
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="0,0,12,0"
+                        Padding="12,12,0,12"
+                        Background="#7469B6"
+                        CornerRadius="12">
+                        <ListBox
+                            d:ItemsSource="{d:SampleData ItemCount=15}"
+                            Background="Transparent"
+                            ItemContainerStyle="{StaticResource ListBoxItemCustomStyle}"
+                            ItemsSource="{Binding Users}"
+                            SelectionMode="Multiple"
+                            Style="{StaticResource SettingsListBoxCustomStyle}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="215" Style="{StaticResource ActiveViewCardStyle}">
+                                        <RadioButton
+                                            Cursor="Hand"
+                                            GroupName="AnswersButtons"
+                                            Style="{StaticResource usersMenuButton}">
+                                            <StackPanel>
+                                                <TextBlock
+                                                    Margin="0"
+                                                    HorizontalAlignment="Center"
+                                                    Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RadioButton}}}"
+                                                    Style="{StaticResource ActiveViewCardTextStyle}"
+                                                    Text="{Binding UserName}"
+                                                    TextTrimming="WordEllipsis" />
+                                            </StackPanel>
+                                        </RadioButton>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Border>
+                    <StackPanel
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <Border Margin="0,0,5,0" Style="{StaticResource AddAndDeleteButtonsBorder}">
+                            <iconPacks:PackIconMaterial
+                                Cursor="Hand"
+                                Kind="Plus"
+                                Style="{StaticResource AddAndDeleteButtonsIcon}" />
+                        </Border>
+                        <Border Margin="5,0,0,0" Style="{StaticResource AddAndDeleteButtonsBorder}">
+                            <iconPacks:PackIconMaterial Kind="Minus" Style="{StaticResource AddAndDeleteButtonsIcon}" />
+                        </Border>
+                    </StackPanel>
+                    <Border
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Margin="0,0,0,0"
+                        Padding="0,12,0,12"
+                        Background="#7469B6"
+                        CornerRadius="12">
+                        <StackPanel>
+                            <TextBlock
+                                Margin="0"
+                                HorizontalAlignment="Center"
+                                Style="{StaticResource ActiveViewCardTextStyle}"
+                                Text="Выбранный шаблон" />
+                            <StackPanel Margin="0,12,0,0" HorizontalAlignment="Center">
+                                <TextBlock Style="{StaticResource SettingsViewSmallGrayText}" Text="Название" />
+                                <TextBox
+                                    Width="200"
+                                    MaxWidth="200"
+                                    Style="{DynamicResource TextBoxStyle}"
+                                    Tag="пусто..."
+                                    TextWrapping="NoWrap" />
+                            </StackPanel>
+                            <StackPanel Margin="0,12,0,0">
+                                <TextBlock Style="{StaticResource SettingsViewSmallGrayText}" Text="Рейтинг" />
+                                <TextBox
+                                    Width="200"
+                                    MaxWidth="200"
+                                    Style="{DynamicResource TextBoxStyle}"
+                                    Tag="Например: 1#3-5"
+                                    TextWrapping="NoWrap" />
+                            </StackPanel>
+                            <StackPanel Margin="0,12,0,0">
+                                <TextBlock Style="{StaticResource SettingsViewSmallGrayText}" Text="Токен отзывов/вопросов" />
+                                <TextBox
+                                    Width="200"
+                                    Height="245"
+                                    MaxWidth="200"
+                                    MaxHeight="245"
+                                    HorizontalContentAlignment="Left"
+                                    VerticalContentAlignment="Top"
+                                    BorderThickness="2"
+                                    Style="{DynamicResource TextBoxStyle}"
+                                    Tag="пусто..."
+                                    TextWrapping="Wrap"
+                                    VerticalScrollBarVisibility="Auto" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <Border
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        Padding="15,10"
+                        Style="{StaticResource AddAndDeleteButtonsBorder}">
+                        <TextBlock
+                            Margin="0"
+                            FontSize="14"
+                            Style="{StaticResource ActiveViewCardTextStyle}"
+                            Text="Сохранить" />
+                    </Border>
+                </Grid>
+            </Border>
         </Grid>
     </Border>
 </UserControl>

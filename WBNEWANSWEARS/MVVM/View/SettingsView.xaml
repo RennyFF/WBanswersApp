@@ -49,7 +49,7 @@
                             Background="Transparent"
                             ItemContainerStyle="{StaticResource ListBoxItemCustomStyle}"
                             ItemsSource="{Binding Users}"
-                            SelectionMode="Multiple"
+                            SelectionMode="Single"
                             Style="{StaticResource SettingsListBoxCustomStyle}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
@@ -105,7 +105,8 @@
                             <StackPanel Margin="0,12,0,0" HorizontalAlignment="Center">
                                 <TextBlock Style="{StaticResource SettingsViewSmallGrayText}" Text="Название" />
                                 <TextBox
-                                    HorizontalContentAlignment="Center"
+                                    Width="350"
+                                    MaxWidth="350"
                                     Style="{DynamicResource TextBoxStyle}"
                                     Tag="пусто..."
                                     TextWrapping="NoWrap" />
@@ -113,7 +114,8 @@
                             <StackPanel Margin="0,12,0,0">
                                 <TextBlock Style="{StaticResource SettingsViewSmallGrayText}" Text="Токен контента" />
                                 <TextBox
-                                    HorizontalContentAlignment="Center"
+                                    Width="350"
+                                    MaxWidth="350"
                                     Style="{DynamicResource TextBoxStyle}"
                                     Tag="пусто..."
                                     TextWrapping="NoWrap" />
@@ -121,20 +123,21 @@
                             <StackPanel Margin="0,12,0,0">
                                 <TextBlock Style="{StaticResource SettingsViewSmallGrayText}" Text="Токен отзывов/вопросов" />
                                 <TextBox
-                                    HorizontalContentAlignment="Center"
+                                    Width="350"
+                                    MaxWidth="350"
                                     Style="{DynamicResource TextBoxStyle}"
                                     Tag="пусто..."
                                     TextWrapping="NoWrap" />
                             </StackPanel>
                             <StackPanel Height="197" Margin="0,12,0,0">
                                 <TextBlock Style="{StaticResource SettingsViewSmallGrayText}" Text="Использующиеся ответы" />
-                                <Border Height="197" Margin="15,2,5,12">
+                                <Border Height="197" Margin="15,2,0,12">
                                     <ListBox
                                         d:ItemsSource="{d:SampleData ItemCount=15}"
                                         Background="Transparent"
                                         ItemContainerStyle="{StaticResource ListBoxItemCustomStyle}"
                                         ItemsSource="{Binding Users}"
-                                        SelectionMode="Multiple"
+                                        SelectionMode="Single"
                                         Style="{StaticResource SettingsListBoxCustomStyle}">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>

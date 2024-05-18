@@ -458,7 +458,6 @@
             <Setter Property="FontWeight" Value="Medium" />
             <Setter Property="FontSize" Value="18" />
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-            <Setter Property="Margin" Value="0,0,0,0" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
@@ -539,10 +538,9 @@
             <Setter Property="FontSize" Value="16" />
             <Setter Property="Padding" Value="5,4" />
             <Setter Property="Cursor" Value="IBeam" />
-            <Setter Property="Width" Value="350" />
-            <Setter Property="MaxWidth" Value="350" />
             <Setter Property="Height" Value="40" />
             <Setter Property="FontWeight" Value="Regular" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
             <Setter Property="MaxHeight" Value="40" />
             <Setter Property="AllowDrop" Value="True" />
             <Setter Property="Foreground" Value="#FFE6E6" />
