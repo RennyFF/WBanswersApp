@@ -12,13 +12,11 @@
     d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
     AllowsTransparency="True"
     Background="Transparent"
+    MouseDown="UIElement_Border_MouseDown"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
-    <Border
-        Padding="20"
-        CornerRadius="12"
-        MouseDown="UIElement_Border_MouseDown">
+    <Border Padding="20" CornerRadius="12">
         <Border.Background>
             <LinearGradientBrush>
                 <GradientStop Offset="0.6" Color="#7469B6" />

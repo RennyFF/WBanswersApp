@@ -14,7 +14,7 @@ namespace ConsoleApp1
                 connection.Open();
                 SQLiteCommand command = new();
                 command.Connection = connection;
-                command.CommandText = $"CREATE TABLE IF NOT EXISTS {_UsersName}(Id INTEGER NOT NULL PRIMARY KEY UNIQUE, UserName TEXT, " +
+                command.CommandText = $"CREATE TABLE IF NOT EXISTS {_UsersName}(Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, UserName TEXT, " +
                                       "TokenContent TEXT, TokenFeedBack TEXT, Preset TEXT)";
                 try
                 {
@@ -119,7 +119,7 @@ namespace ConsoleApp1
                 connection.Open();
                 SQLiteCommand command = new();
                 command.Connection = connection;
-                command.CommandText = $"CREATE TABLE IF NOT EXISTS {_AnswersName}(Id INTEGER NOT NULL PRIMARY KEY UNIQUE, Title TEXT, " +
+                command.CommandText = $"CREATE TABLE IF NOT EXISTS {_AnswersName}(Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Title TEXT, " +
                                       "Priority INTEGER, IsUsed INTEGER, Pattern TEXT, isRating INTEGER, TargetRating TEXT, Text TEXT, UserId INTEGER, FOREIGN KEY (UserId) REFERENCES Users(Id))";
                 try
                 {
@@ -149,6 +149,7 @@ namespace ConsoleApp1
                         AnswersStructure answer = new();
 
                         answer.Id = Convert.ToInt32(reader["Id"]);
+                        answer.UserId = Convert.ToInt32(reader["UserId"]);
                         answer.Title = reader["Title"].ToString();
                         answer.Priority = Convert.ToInt32(reader["Priority"]);
                         answer.IsUsed = Convert.ToBoolean(reader["IsUsed"]);

@@ -32,7 +32,7 @@
                 Margin="0,24,12,24"
                 Style="{StaticResource FavsScrollViewer}"
                 VerticalScrollBarVisibility="Auto">
-                <ItemsControl Padding="12,0,0,0" ItemsSource="{Binding Cards}">
+                <ItemsControl Padding="12,0,0,0" ItemsSource="{Binding Cards}" d:ItemsSource="{d:SampleData ItemCount=15}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal" />

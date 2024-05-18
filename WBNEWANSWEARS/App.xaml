@@ -432,6 +432,7 @@
             <Setter Property="Foreground" Value="#FFE6E6" />
         </Style>
 
+
         <!--  SettingsView styles  -->
 
         <Style x:Key="SettingsListBoxCustomStyle" TargetType="ListBox">

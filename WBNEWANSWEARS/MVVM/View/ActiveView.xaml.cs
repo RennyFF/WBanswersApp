@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WBNEWANSWEARS.MVVM.ViewModel;
 using static WBNEWANSWEARS.MVVM.ViewModel.ActiveViewModel;
 
 namespace WBNEWANSWEARS.MVVM.View

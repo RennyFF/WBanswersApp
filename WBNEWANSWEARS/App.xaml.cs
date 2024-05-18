@@ -22,13 +22,6 @@ namespace WBNEWANSWEARS
             set { users_list = value; }
         }
 
-        private List<AnswersStructure> answers_list = new();
-        public List<AnswersStructure> ANSWERS
-        {
-            get { return answers_list; }
-            set { answers_list = value; }
-        }
-
         private dbRequests db = new();
 
         public App()
@@ -57,22 +50,42 @@ namespace WBNEWANSWEARS
             isSuccessCreation = db.CreateDBUsers();
             isSuccessCreation = db.CreateDBAnsw();
             //UsersStructure us = new UsersStructure();
-            //us.UserName = "SUPER LONG AHAHAHH NICE TRY TO ADAPT";
+            //us.UserName = "1as";
             //us.TokenFeedBack = "3";
             //us.TokenContent = "3";
             //us.Preset = "3";
             //db.AddDBUsers(us);
-            //us.UserName = "Ромашов А.С. - GATT";
+            //us.UserName = "2as";
+            //us.TokenFeedBack = "3";
+            //us.TokenContent = "3";
+            //us.Preset = "3";
             //db.AddDBUsers(us);
-            //us.UserName = "Алексеева М.А.";
-            //db.AddDBUsers(us);
-            //us.UserName = "BeautyReason";
-            //db.AddDBUsers(us);
-            //db.AddDBUsers(us);
+            //AnswersStructure asc = new AnswersStructure();
+            //asc.Id = 1;
+            //asc.IsRating = true;
+            //asc.Title = "BARARA2";
+            //asc.Priority = 1;
+            //asc.IsUsed = true;
+            //asc.Text = "FUCK2";
+            //asc.UserId = 2;
+            //db.AddDBAnsw(asc);
+            //asc.Id = 1;
+            //asc.IsRating = true;
+            //asc.Title = "BARARA1";
+            //asc.Priority = 1;
+            //asc.IsUsed = true;
+            //asc.Text = "FUCK1";
+            //asc.UserId = 1;
+            //db.AddDBAnsw(asc);
             if (isSuccessCreation)
             {
-                USERS = getAllUsersFromDB();
-                ANSWERS = getAllAnswersFromDB();
+                List<UsersStructure> _tmpUsers = getAllUsersFromDB();
+                List<AnswersStructure> _tmpAnswers = getAllAnswersFromDB();
+                USERS = PopulateUsersWithAnswers(_tmpUsers, _tmpAnswers);
+            }
+            else
+            {
+                MessageBox.Show("Ошибка загрузки данных!");
             }
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
@@ -88,6 +101,25 @@ namespace WBNEWANSWEARS
         {
             return db.GetDBAnsw();
         }
+
+        private List<UsersStructure> PopulateUsersWithAnswers(List<UsersStructure> users, List<AnswersStructure> answers)
+        {
+            var answersGroupedByUserId = answers.GroupBy(a => a.UserId);
+
+            foreach (var user in users)
+            {
+                if (answersGroupedByUserId.Any(g => g.Key == user.Id))
+                {
+                    user.Answers = answersGroupedByUserId.First(g => g.Key == user.Id).ToList();
+                }
+                else
+                {
+                    user.Answers = [];
+                }
+            }
+            return users;
+        }
+
 
     }
 
