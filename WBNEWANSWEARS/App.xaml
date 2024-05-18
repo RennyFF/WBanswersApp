@@ -157,7 +157,6 @@
             <Setter Property="VerticalAlignment" Value="Bottom" />
             <Setter Property="Background" Value="#69619B" />
             <Setter Property="CornerRadius" Value="0,0,10,10" />
-            <Setter Property="Cursor" Value="Hand" />
         </Style>
 
         <!--  ScrollBar style  -->
@@ -449,6 +448,33 @@
             </Setter>
         </Style>
 
+        <Style x:Key="SettingsListBoxItemContainerCustomStyle" TargetType="ListBoxItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border
+                            x:Name="border"
+                            Width="345"
+                            Height="50"
+                            Margin="0,0,10,10"
+                            Background="#8179B3"
+                            BorderBrush="Transparent"
+                            BorderThickness="1"
+                            CornerRadius="10"
+                            Cursor="Hand">
+                            <ContentPresenter />
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="White" />
+                                <Setter TargetName="border" Property="BorderThickness" Value="2" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <Style x:Key="usersMenuButton" TargetType="RadioButton">
             <Setter Property="Background" Value="Transparent" />
@@ -616,6 +642,7 @@
         </Style>
 
         <Style x:Key="SettingsCustomCheckBoxStyle" TargetType="CheckBox">
+            <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="CheckBox">
@@ -642,6 +669,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
 
     </Application.Resources>
 </Application>

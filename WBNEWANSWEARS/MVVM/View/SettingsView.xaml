@@ -47,28 +47,19 @@
                         <ListBox
                             d:ItemsSource="{d:SampleData ItemCount=15}"
                             Background="Transparent"
-                            ItemContainerStyle="{StaticResource ListBoxItemCustomStyle}"
+                            ItemContainerStyle="{StaticResource SettingsListBoxItemContainerCustomStyle}"
                             ItemsSource="{Binding Users}"
+                            SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
                             SelectionMode="Single"
                             Style="{StaticResource SettingsListBoxCustomStyle}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Width="345" Style="{StaticResource ActiveViewCardStyle}">
-                                        <RadioButton
-                                            Cursor="Hand"
-                                            GroupName="UsersButtons"
-                                            Style="{StaticResource usersMenuButton}">
-                                            <StackPanel>
-                                                <TextBlock
-                                                    Margin="0"
-                                                    HorizontalAlignment="Center"
-                                                    Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RadioButton}}}"
-                                                    Style="{StaticResource ActiveViewCardTextStyle}"
-                                                    Text="{Binding UserName}"
-                                                    TextTrimming="WordEllipsis" />
-                                            </StackPanel>
-                                        </RadioButton>
-                                    </Border>
+                                    <TextBlock
+                                        Margin="0"
+                                        HorizontalAlignment="Center"
+                                        Style="{StaticResource ActiveViewCardTextStyle}"
+                                        Text="{Binding UserName}"
+                                        TextTrimming="WordEllipsis" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -95,7 +86,8 @@
                         Margin="0,0,0,0"
                         Padding="0,12,0,12"
                         Background="#7469B6"
-                        CornerRadius="12">
+                        CornerRadius="12"
+                        DataContext="{Binding SelectedUser}">
                         <StackPanel>
                             <TextBlock
                                 Margin="0"
@@ -109,6 +101,7 @@
                                     MaxWidth="350"
                                     Style="{DynamicResource TextBoxStyle}"
                                     Tag="пусто..."
+                                    Text="{Binding UserName}"
                                     TextWrapping="NoWrap" />
                             </StackPanel>
                             <StackPanel Margin="0,12,0,0">
@@ -118,6 +111,7 @@
                                     MaxWidth="350"
                                     Style="{DynamicResource TextBoxStyle}"
                                     Tag="пусто..."
+                                    Text="{Binding TokenContent}"
                                     TextWrapping="NoWrap" />
                             </StackPanel>
                             <StackPanel Margin="0,12,0,0">
@@ -127,6 +121,7 @@
                                     MaxWidth="350"
                                     Style="{DynamicResource TextBoxStyle}"
                                     Tag="пусто..."
+                                    Text="{Binding TokenFeedBack}"
                                     TextWrapping="NoWrap" />
                             </StackPanel>
                             <StackPanel Height="197" Margin="0,12,0,0">
@@ -136,24 +131,29 @@
                                         d:ItemsSource="{d:SampleData ItemCount=15}"
                                         Background="Transparent"
                                         ItemContainerStyle="{StaticResource ListBoxItemCustomStyle}"
-                                        ItemsSource="{Binding Users}"
+                                        ItemsSource="{Binding Answers}"
                                         SelectionMode="Single"
                                         Style="{StaticResource SettingsListBoxCustomStyle}">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
-                                                <Border Height="30" Style="{StaticResource ActiveViewCardStyle}">
+                                                <Border
+                                                    Height="30"
+                                                    Cursor="Arrow"
+                                                    Style="{StaticResource ActiveViewCardStyle}">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="30" />
                                                             <ColumnDefinition Width="*" />
                                                             <ColumnDefinition Width="30" />
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock
+                                                        <ComboBox
                                                             Grid.Column="0"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center"
                                                             FontSize="16"
                                                             Foreground="#FFE6E6"
+                                                            ItemsSource="{Binding DataContext.PriorityNumbers, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                            SelectedItem="{Binding Priority}"
                                                             Text="10" />
                                                         <Border
                                                             Grid.Column="1"
@@ -165,7 +165,7 @@
                                                                 HorizontalAlignment="Center"
                                                                 FontSize="14"
                                                                 Style="{StaticResource ActiveViewCardTextStyle}"
-                                                                Text="{Binding UserName}" />
+                                                                Text="{Binding Title}" />
                                                         </Border>
                                                         <!--  DO AFTER MERGING  -->
                                                         <CheckBox

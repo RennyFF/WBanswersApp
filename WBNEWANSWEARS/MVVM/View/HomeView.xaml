@@ -56,14 +56,22 @@
                                             Height="60"
                                             HorizontalAlignment="Center"
                                             Foreground="#FFE6E6"
-                                            Kind="Account" />
+                                            Kind="Account">
+                                            <iconPacks:PackIconMaterial.Effect>
+                                                <DropShadowEffect
+                                                    Direction="320"
+                                                    Opacity="0.2"
+                                                    ShadowDepth="5"
+                                                    Color="Gray" />
+                                            </iconPacks:PackIconMaterial.Effect>
+                                        </iconPacks:PackIconMaterial>
                                         <TextBlock
                                             Grid.Row="1"
                                             Style="{StaticResource CardTextStyle}"
                                             Text="{Binding UserName}" />
                                     </Grid>
                                 </Border>
-                                <Border Style="{StaticResource CardUnderSectionStyle}">
+                                <Border Cursor="" Style="{StaticResource CardUnderSectionStyle}">
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
