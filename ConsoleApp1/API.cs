@@ -82,6 +82,33 @@ namespace ConsoleApp1
                 }
             }
         }
+        public async Task<int> SendGetUnanswered (string authorization)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    string _FEEDBACKURILIST = $"{FEEDBACK_URL}" + $"api/v1/feedbacks/count-unanswered";
+
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authorization);
+
+                    var response = await client.GetAsync(_FEEDBACKURILIST);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        FeedBackCount feedBackUnAnswered = new();
+                        var responseJson = response.Content.ReadFromJsonAsync<FeedBackCountData>().Result;
+                        feedBackUnAnswered = responseJson.data;
+                        return Convert.ToInt32(feedBackUnAnswered.countUnanswered);
+                    }
+                    return -1;
+                }
+                catch (Exception ex)
+                {
+                    return -1;
+                }
+            }
+        }
         public async Task<bool> SendPatchRequestAnswer(string authorization, string feedbackid, string answertext)
         {
             using (HttpClient client = new HttpClient())

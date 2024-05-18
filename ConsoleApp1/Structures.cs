@@ -59,4 +59,13 @@ namespace ConsoleApp1
         public string id { get; set; }
         public string text { get; set; }
     }
+
+    public class FeedBackCountData
+    {
+        public FeedBackCount data { get; set; }
+    }
+    public class FeedBackCount
+    {
+        public int countUnanswered { get; set; }
+    }
 }
