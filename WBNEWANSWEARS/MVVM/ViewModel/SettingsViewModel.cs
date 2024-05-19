@@ -99,10 +99,15 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
                     UsersUpdated?.Invoke(Users.ToList());
                     dbRequests db = new();
                     db.DeleteAllRowsDb("Users");
+                    db.DeleteAllRowsDb("Answers");
                     bool isSaved = true;
                     foreach (var user in Users)
                     {
                         db.AddDBUsers(user);
+                        foreach (var answ in user.Answers)
+                        {
+                            db.AddDBAnsw(answ);
+                        }
                     }
                     if (isSaved)
                     {

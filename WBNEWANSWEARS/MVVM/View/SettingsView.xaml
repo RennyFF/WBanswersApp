@@ -139,11 +139,13 @@
                                 <TextBlock Style="{StaticResource SettingsViewSmallGrayText}" Text="Использующиеся ответы" />
                                 <Border Height="197" Margin="15,2,0,12">
                                     <ListBox
+                                        x:Name="AnswersList"
                                         d:ItemsSource="{d:SampleData ItemCount=15}"
                                         Background="Transparent"
+                                        Cursor=""
                                         ItemContainerStyle="{StaticResource ListBoxItemCustomStyle}"
                                         ItemsSource="{Binding Answers}"
-                                        SelectionMode="Single"
+                                        SelectionMode="Multiple"
                                         Style="{StaticResource SettingsListBoxCustomStyle}">
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
@@ -183,8 +185,8 @@
                                                             Grid.Column="2"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center"
-                                                            IsChecked="False"
-                                                            Style="{StaticResource SettingsCustomCheckBoxStyle}" />
+                                                            IsChecked="{Binding IsUsed}"
+                                                            Style="{StaticResource SettingsCustomCheckBoxStyle}" Cursor="Hand" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
