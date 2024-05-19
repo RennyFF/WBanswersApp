@@ -14,7 +14,7 @@ namespace ConsoleApp1
                 connection.Open();
                 SQLiteCommand command = new();
                 command.Connection = connection;
-                command.CommandText = $"CREATE TABLE IF NOT EXISTS {_UsersName}(Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, UserName TEXT, " +
+                command.CommandText = $"CREATE TABLE IF NOT EXISTS {_UsersName}(Id INTEGER NOT NULL PRIMARY KEY UNIQUE, UserName TEXT, " +
                                       "TokenContent TEXT, TokenFeedBack TEXT, Preset TEXT)";
                 try
                 {
@@ -67,7 +67,7 @@ namespace ConsoleApp1
                 command.Connection = connection;
                 command.CommandText = $"INSERT INTO {_UsersName} (Id, UserName, TokenContent, TokenFeedback, Preset) " +
                                       $"VALUES (@Id, @UserName, @TokenContent, @TokenFeedback, @Preset)";
-                command.Parameters.AddWithValue("@Id", GetLastNewId(_UsersName));
+                command.Parameters.AddWithValue("@Id", user.Id);
                 command.Parameters.AddWithValue("@UserName", user.UserName);
                 command.Parameters.AddWithValue("@TokenContent", user.TokenContent);
                 command.Parameters.AddWithValue("@TokenFeedback", user.TokenFeedBack);
@@ -84,6 +84,27 @@ namespace ConsoleApp1
                 }
             }
         }
+        public bool DeleteAllRowsDb(string _dbname)
+        {
+            using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
+            {
+                connection.Open();
+
+                SQLiteCommand command = new();
+                command.Connection = connection;
+                command.CommandText = $"DELETE FROM {_dbname};";
+                try
+                {
+                    command.ExecuteNonQuery();
+                    return true;
+                }
+                catch (SQLiteException e)
+                {
+                    return false;
+                }
+            }
+        }
+
 
         public bool UpdateDBUser(UsersStructure user)
         {
@@ -119,7 +140,7 @@ namespace ConsoleApp1
                 connection.Open();
                 SQLiteCommand command = new();
                 command.Connection = connection;
-                command.CommandText = $"CREATE TABLE IF NOT EXISTS {_AnswersName}(Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Title TEXT, " +
+                command.CommandText = $"CREATE TABLE IF NOT EXISTS {_AnswersName}(Id INTEGER NOT NULL PRIMARY KEY UNIQUE, Title TEXT, " +
                                       "Priority INTEGER, IsUsed INTEGER, Pattern TEXT, isRating INTEGER, TargetRating TEXT, Text TEXT, UserId INTEGER, FOREIGN KEY (UserId) REFERENCES Users(Id))";
                 try
                 {
@@ -175,7 +196,7 @@ namespace ConsoleApp1
                 command.Connection = connection;
                 command.CommandText = $"INSERT INTO Answers (Id, Title, Priority, IsUsed, Pattern, IsRating, TargetRating, Text, UserId) " +
                                       $"VALUES (@Id, @Title, @Priority, @IsUsed, @Pattern, @IsRating, @TargetRating, @Text, @UserId)";
-                command.Parameters.AddWithValue("@Id", GetLastNewId(_AnswersName));
+                command.Parameters.AddWithValue("@Id", answer.Id);
                 command.Parameters.AddWithValue("@Title", answer.Title);
                 command.Parameters.AddWithValue("@Priority", answer.Priority);
                 command.Parameters.AddWithValue("@IsUsed", answer.IsUsed ? 1 : 0);

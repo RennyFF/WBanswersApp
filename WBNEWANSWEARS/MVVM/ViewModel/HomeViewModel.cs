@@ -1,6 +1,7 @@
 ﻿using ConsoleApp1;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 
 namespace WBNEWANSWEARS.MVVM.ViewModel
 {
@@ -63,10 +64,18 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
         private async void InitializeUnansweredCounts()
         {
             API api = new API();
-            foreach (var user in Cards)
+            try
             {
-                user.UnansweredCount = await api.SendGetUnanswered(user.TokenFeedBack);
-                await Task.Delay(1100);
+                foreach (var user in Cards)
+                {
+                    user.UnansweredCount = await api.SendGetUnanswered(user.TokenFeedBack);
+                    await Task.Delay(1100);
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                await Task.Delay(5000);
+                InitializeUnansweredCounts();
             }
         }
         private List<HomeUsersStructure> toHomeType(List<UsersStructure> originUsers)
@@ -79,6 +88,12 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
             }).ToList();
 
             return homeUsers;
+        }
+        public void UpdateUsers(List<UsersStructure> users)
+        {
+            Cards.Clear();
+            Cards = new ObservableCollection<HomeUsersStructure>(toHomeType(users));
+            InitializeUnansweredCounts();
         }
 
     }

@@ -90,8 +90,15 @@ namespace WBNEWANSWEARS
             }
             else
             {
-                MessageBox.Show("Ошибка загрузки данных!");
+                MessageBox.Show("Данные не смогли загрузится", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            var settingsViewModel = _serviceProvider.GetRequiredService<SettingsViewModel>();
+            var homeViewModel = _serviceProvider.GetRequiredService<HomeViewModel>();
+            settingsViewModel.UsersUpdated += (updatedUsers) =>
+            {
+                homeViewModel.UpdateUsers(updatedUsers);
+            };
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
             base.OnStartup(e);

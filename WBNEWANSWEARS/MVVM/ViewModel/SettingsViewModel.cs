@@ -6,11 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using WBNEWANSWEARS.Core;
 
 namespace WBNEWANSWEARS.MVVM.ViewModel
 {
     class SettingsViewModel : Core.ViewModel
     {
+        public delegate void UsersUpdatedEventHandler(List<UsersStructure> updatedUsers);
+        public event UsersUpdatedEventHandler UsersUpdated;
         private ObservableCollection<int> priorityNumbers = new ObservableCollection<int>()
         {
             0,
@@ -30,9 +34,13 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
             get => priorityNumbers;
         }
         private ObservableCollection<UsersStructure> _users;
+
         public ObservableCollection<UsersStructure> Users
         {
-            set => _users = value;
+            set {
+            _users = value;
+            onPropertyChanged(nameof(Users));
+            }
             get => _users;
         }
 
@@ -46,6 +54,69 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
             }
             get => _selectedUser;
         }
+        private RelayCommand addUser;
+        private RelayCommand removeUser;
+        private RelayCommand saveUser;
+
+        public RelayCommand AddUser
+        {
+            get
+            {
+                return addUser ??= new RelayCommand(obj =>
+                {
+                    UsersStructure _ = new UsersStructure(GetLastId(Users.ToList()),"Новый пользователь", "", "", "", [] );
+                    Users.Add(_);
+                }, obj => Users != null);
+            }
+        }
+
+        private int GetLastId(List<UsersStructure> users)
+        {
+            int res = users.Count + 1;
+            return res;
+        }
+
+        public RelayCommand RemoveUser
+        {
+            get
+            {
+                return removeUser ??= new RelayCommand(obj =>
+                {
+                    if (Users.Contains(SelectedUser))
+                    {
+                        Users.Remove(SelectedUser);
+                    }
+                }, obj => SelectedUser != null);
+            }
+        }
+        public RelayCommand SaveUser
+        {
+            get
+            {
+                return saveUser ??= new RelayCommand(obj =>
+                {
+                    (Application.Current as App).USERS = new List<UsersStructure>(Users);
+                    UsersUpdated?.Invoke(Users.ToList());
+                    dbRequests db = new();
+                    db.DeleteAllRowsDb("Users");
+                    bool isSaved = true;
+                    foreach (var user in Users)
+                    {
+                        db.AddDBUsers(user);
+                    }
+                    if (isSaved)
+                    {
+                        MessageBox.Show("Пользователи сохранен!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Произошла ошибка сохранения!", "Ошибка",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }, obj => Users != null);
+            }
+        }
+
 
         public SettingsViewModel(List<UsersStructure> users)
         {

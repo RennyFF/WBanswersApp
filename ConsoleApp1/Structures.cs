@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,6 +17,21 @@ namespace ConsoleApp1
         public string TokenFeedBack { get; set; }
         public string Preset { get; set; }
         public List<AnswersStructure> Answers { get; set; }
+
+        public UsersStructure(int id, string userName, string tokenContent, string tokenFeedBack, string preset, List<AnswersStructure> answers)
+        {
+            Id = id;
+            UserName = userName;
+            TokenFeedBack = tokenFeedBack;
+            TokenContent = tokenContent;
+            Preset = preset;
+            Answers = new List<AnswersStructure>();
+        }
+
+        public UsersStructure()
+        {
+            
+        }
     }
 
     public class AnswersStructure
