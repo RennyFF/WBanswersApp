@@ -111,7 +111,7 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
                     }
                     if (isSaved)
                     {
-                        MessageBox.Show("Пользователи сохранен!");
+                        MessageBox.Show("Пользователи сохранены!");
                     }
                     else
                     {

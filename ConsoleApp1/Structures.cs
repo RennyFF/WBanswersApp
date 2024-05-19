@@ -40,11 +40,24 @@ namespace ConsoleApp1
         public string Title { get; set; }
         public int Priority { get; set; }
         public bool IsUsed { get; set; }
-        public string? Pattern { get; set; }
-        public bool IsRating { get; set; }
         public string TargetRating { get; set; }
         public string Text { get; set; }
         public int UserId { get; set; }
+        public AnswersStructure(int id, string title, int priority, bool isUsed, string targetRating, string text, int userId)
+        {
+            Id = id;
+            Title = title;
+            Priority = priority;
+            IsUsed = isUsed;
+            TargetRating = targetRating;
+            Text = text;
+            UserId = userId;
+        }
+
+        public AnswersStructure()
+        {
+
+        }
     }
     public class NMList
     {

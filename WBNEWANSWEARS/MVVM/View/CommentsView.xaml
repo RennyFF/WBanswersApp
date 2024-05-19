@@ -2,6 +2,7 @@
     x:Class="WBNEWANSWEARS.MVVM.View.CommentsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:WBNEWANSWEARS.MVVM.View"
@@ -47,25 +48,19 @@
                         <ListBox
                             d:ItemsSource="{d:SampleData ItemCount=15}"
                             Background="Transparent"
-                            ItemContainerStyle="{StaticResource ListBoxItemCustomStyle}"
+                            ItemContainerStyle="{StaticResource CommentsListBoxItemContainerCustomStyle}"
                             ItemsSource="{Binding Users}"
+                            SelectedItem="{Binding SelectedUser, Mode=TwoWay}"
                             SelectionMode="Single"
                             Style="{StaticResource SettingsListBoxCustomStyle}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Width="215" Style="{StaticResource ActiveViewCardStyle}">
-                                        <RadioButton GroupName="UsersButtons" Style="{StaticResource usersMenuButton}">
-                                            <StackPanel>
-                                                <TextBlock
-                                                    Margin="0"
-                                                    HorizontalAlignment="Center"
-                                                    Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RadioButton}}}"
-                                                    Style="{StaticResource ActiveViewCardTextStyle}"
-                                                    Text="{Binding UserName}"
-                                                    TextTrimming="WordEllipsis" />
-                                            </StackPanel>
-                                        </RadioButton>
-                                    </Border>
+                                    <TextBlock
+                                        Margin="0"
+                                        HorizontalAlignment="Center"
+                                        Style="{StaticResource ActiveViewCardTextStyle}"
+                                        Text="{Binding UserName}"
+                                        TextTrimming="WordEllipsis" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -80,28 +75,19 @@
                         <ListBox
                             d:ItemsSource="{d:SampleData ItemCount=15}"
                             Background="Transparent"
-                            ItemContainerStyle="{StaticResource ListBoxItemCustomStyle}"
-                            ItemsSource="{Binding Users}"
-                            SelectionMode="Multiple"
+                            ItemContainerStyle="{StaticResource CommentsListBoxItemContainerCustomStyle}"
+                            ItemsSource="{Binding Answers}"
+                            SelectedItem="{Binding SelectedAnswer, Mode=TwoWay}"
+                            SelectionMode="Single"
                             Style="{StaticResource SettingsListBoxCustomStyle}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Width="215" Style="{StaticResource ActiveViewCardStyle}">
-                                        <RadioButton
-                                            Cursor="Hand"
-                                            GroupName="AnswersButtons"
-                                            Style="{StaticResource usersMenuButton}">
-                                            <StackPanel>
-                                                <TextBlock
-                                                    Margin="0"
-                                                    HorizontalAlignment="Center"
-                                                    Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type RadioButton}}}"
-                                                    Style="{StaticResource ActiveViewCardTextStyle}"
-                                                    Text="{Binding UserName}"
-                                                    TextTrimming="WordEllipsis" />
-                                            </StackPanel>
-                                        </RadioButton>
-                                    </Border>
+                                    <TextBlock
+                                        Margin="0"
+                                        HorizontalAlignment="Center"
+                                        Style="{StaticResource ActiveViewCardTextStyle}"
+                                        Text="{Binding Title}"
+                                        TextTrimming="WordEllipsis" />
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -113,12 +99,22 @@
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
                         <Border Margin="0,0,5,0" Style="{StaticResource AddAndDeleteButtonsBorder}">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="PreviewMouseDown">
+                                    <b:InvokeCommandAction Command="{Binding DataContext.AddAnsw, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}" />
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
                             <iconPacks:PackIconMaterial
                                 Cursor="Hand"
                                 Kind="Plus"
                                 Style="{StaticResource AddAndDeleteButtonsIcon}" />
                         </Border>
                         <Border Margin="5,0,0,0" Style="{StaticResource AddAndDeleteButtonsBorder}">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="PreviewMouseDown">
+                                    <b:InvokeCommandAction Command="{Binding DataContext.RemoveAnsw, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}" />
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
                             <iconPacks:PackIconMaterial Kind="Minus" Style="{StaticResource AddAndDeleteButtonsIcon}" />
                         </Border>
                     </StackPanel>
@@ -128,7 +124,8 @@
                         Margin="0,0,0,0"
                         Padding="0,12,0,12"
                         Background="#7469B6"
-                        CornerRadius="12">
+                        CornerRadius="12"
+                        DataContext="{Binding SelectedAnswer}">
                         <StackPanel>
                             <TextBlock
                                 Margin="0"
@@ -142,19 +139,21 @@
                                     MaxWidth="200"
                                     Style="{DynamicResource TextBoxStyle}"
                                     Tag="пусто..."
+                                    Text="{Binding Title}"
                                     TextWrapping="NoWrap" />
                             </StackPanel>
                             <StackPanel Margin="0,12,0,0">
-                                <TextBlock Style="{StaticResource SettingsViewSmallGrayText}" Text="Рейтинг" />
+                                <TextBlock Style="{StaticResource SettingsViewSmallGrayText}" Text="Целевой рейтинг" />
                                 <TextBox
                                     Width="200"
                                     MaxWidth="200"
                                     Style="{DynamicResource TextBoxStyle}"
                                     Tag="Например: 1#3-5"
+                                    Text="{Binding TargetRating}"
                                     TextWrapping="NoWrap" />
                             </StackPanel>
                             <StackPanel Margin="0,12,0,0">
-                                <TextBlock Style="{StaticResource SettingsViewSmallGrayText}" Text="Токен отзывов/вопросов" />
+                                <TextBlock Style="{StaticResource SettingsViewSmallGrayText}" Text="Текст ответа" />
                                 <TextBox
                                     Width="200"
                                     Height="245"
@@ -165,6 +164,7 @@
                                     BorderThickness="2"
                                     Style="{DynamicResource TextBoxStyle}"
                                     Tag="пусто..."
+                                    Text="{Binding Text}"
                                     TextWrapping="Wrap"
                                     VerticalScrollBarVisibility="Auto" />
                             </StackPanel>
@@ -174,7 +174,13 @@
                         Grid.Row="1"
                         Grid.Column="2"
                         Padding="15,10"
+                        Cursor="Hand"
                         Style="{StaticResource AddAndDeleteButtonsBorder}">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="PreviewMouseDown">
+                                <b:InvokeCommandAction Command="{Binding DataContext.SaveAnsw, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}" />
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
                         <TextBlock
                             Margin="0"
                             FontSize="14"

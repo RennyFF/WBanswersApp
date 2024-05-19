@@ -137,11 +137,11 @@ namespace ConsoleApp1
         {
             using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
-                connection.Open();
+        connection.Open();
                 SQLiteCommand command = new();
                 command.Connection = connection;
                 command.CommandText = $"CREATE TABLE IF NOT EXISTS {_AnswersName}(Id INTEGER NOT NULL PRIMARY KEY UNIQUE, Title TEXT, " +
-                                      "Priority INTEGER, IsUsed INTEGER, Pattern TEXT, isRating INTEGER, TargetRating TEXT, Text TEXT, UserId INTEGER, FOREIGN KEY (UserId) REFERENCES Users(Id))";
+                                      "Priority INTEGER, IsUsed INTEGER, TargetRating TEXT, Text TEXT, UserId INTEGER, FOREIGN KEY (UserId) REFERENCES Users(Id))";
                 try
                 {
                     command.ExecuteNonQuery();
@@ -168,14 +168,11 @@ namespace ConsoleApp1
                     while (reader.Read())
                     {
                         AnswersStructure answer = new();
-
                         answer.Id = Convert.ToInt32(reader["Id"]);
                         answer.UserId = Convert.ToInt32(reader["UserId"]);
                         answer.Title = reader["Title"].ToString();
                         answer.Priority = Convert.ToInt32(reader["Priority"]);
                         answer.IsUsed = Convert.ToBoolean(reader["IsUsed"]);
-                        answer.Pattern = reader["Pattern"].ToString();
-                        answer.IsRating = Convert.ToBoolean(reader["IsRating"]);
                         answer.TargetRating = reader["TargetRating"].ToString();
                         answer.Text = reader["Text"].ToString();
 
@@ -191,17 +188,14 @@ namespace ConsoleApp1
             using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
                 connection.Open();
-
                 SQLiteCommand command = new();
                 command.Connection = connection;
-                command.CommandText = $"INSERT INTO Answers (Id, Title, Priority, IsUsed, Pattern, IsRating, TargetRating, Text, UserId) " +
-                                      $"VALUES (@Id, @Title, @Priority, @IsUsed, @Pattern, @IsRating, @TargetRating, @Text, @UserId)";
+                command.CommandText = $"INSERT INTO Answers (Id, Title, Priority, IsUsed, TargetRating, Text, UserId) " +
+                                      $"VALUES (@Id, @Title, @Priority, @IsUsed, @TargetRating, @Text, @UserId)";
                 command.Parameters.AddWithValue("@Id", answer.Id);
                 command.Parameters.AddWithValue("@Title", answer.Title);
                 command.Parameters.AddWithValue("@Priority", answer.Priority);
                 command.Parameters.AddWithValue("@IsUsed", answer.IsUsed ? 1 : 0);
-                command.Parameters.AddWithValue("@Pattern", answer.Pattern != null ? answer.Pattern: DBNull.Value);
-                command.Parameters.AddWithValue("@IsRating", answer.IsRating ? 1 : 0);
                 command.Parameters.AddWithValue("@TargetRating", answer.TargetRating);
                 command.Parameters.AddWithValue("@Text", answer.Text);
                 command.Parameters.AddWithValue("@UserId", answer.UserId);
@@ -224,16 +218,15 @@ namespace ConsoleApp1
                 connection.Open();
 
                 SQLiteCommand command = new(connection);
-                command.CommandText = $"UPDATE Answers SET Title = @Title, Priority = @Priority, IsUsed = @IsUsed, Pattern = @Pattern, IsRating = @IsRating, TargetRating = @TargetRating, Text = @Text WHERE Id = @Id";
+                command.CommandText = $"UPDATE Answers SET Title = @Title, Priority = @Priority, IsUsed = @IsUsed, TargetRating = @TargetRating, Text = @Text, UserId = @UserId WHERE Id = @Id";
 
                 command.Parameters.AddWithValue("@Title", answer.Title);
                 command.Parameters.AddWithValue("@Priority", answer.Priority);
                 command.Parameters.AddWithValue("@IsUsed", answer.IsUsed ? 1 : 0);
-                command.Parameters.AddWithValue("@Pattern", answer.Pattern);
-                command.Parameters.AddWithValue("@IsRating", answer.IsRating ? 1 : 0);
                 command.Parameters.AddWithValue("@TargetRating", answer.TargetRating);
                 command.Parameters.AddWithValue("@Text", answer.Text);
                 command.Parameters.AddWithValue("@Id", answer.Id);
+                command.Parameters.AddWithValue("@UserId", answer.UserId);
 
                 try
                 {
