@@ -1,5 +1,6 @@
 ﻿using ConsoleApp1;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
 using System.Windows;
@@ -19,7 +20,10 @@ namespace WBNEWANSWEARS
         public List<UsersStructure> USERS
         {
             get { return users_list; }
-            set { users_list = value; }
+            set
+            {
+                users_list = value;
+            }
         }
 
         private dbRequests db = new();
@@ -87,9 +91,7 @@ namespace WBNEWANSWEARS
             //db.AddDBAnsw(asc);
             if (isSuccessCreation)
             {
-                List<UsersStructure> _tmpUsers = getAllUsersFromDB();
-                List<AnswersStructure> _tmpAnswers = getAllAnswersFromDB();
-                USERS = PopulateUsersWithAnswers(_tmpUsers, _tmpAnswers);
+                USERS = getUsers();
             }
             else
             {
@@ -98,15 +100,32 @@ namespace WBNEWANSWEARS
             }
             var settingsViewModel = _serviceProvider.GetRequiredService<SettingsViewModel>();
             var homeViewModel = _serviceProvider.GetRequiredService<HomeViewModel>();
+            var activeViewModel = _serviceProvider.GetRequiredService<ActiveViewModel>();
+            var commentsViewModel = _serviceProvider.GetRequiredService<CommentsViewModel>();
             settingsViewModel.UsersUpdated += (updatedUsers) =>
             {
+                USERS = updatedUsers;
                 homeViewModel.UpdateUsers(updatedUsers);
+                commentsViewModel.Users = new ObservableCollection<UsersStructure>(updatedUsers);
+                activeViewModel.Users = new ObservableCollection<UsersStructure>(updatedUsers);
+
+            };
+            commentsViewModel.UsersByCommentsUpdated += () =>
+            {
+                USERS = getUsers();
             };
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
             base.OnStartup(e);
         }
 
+        private List<UsersStructure> getUsers()
+        {
+            List<UsersStructure> _tmpUsers = getAllUsersFromDB();
+            List<AnswersStructure> _tmpAnswers = getAllAnswersFromDB();
+            var Users = PopulateUsersWithAnswers(_tmpUsers, _tmpAnswers);
+            return Users;
+        }
         private List<UsersStructure> getAllUsersFromDB()
         {
             return db.GetDBUsers();

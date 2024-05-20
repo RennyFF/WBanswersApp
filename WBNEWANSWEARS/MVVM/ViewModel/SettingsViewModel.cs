@@ -93,22 +93,30 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
         {
             get
             {
-                return saveUser ??= new RelayCommand(obj =>
+                return saveUser ??= new RelayCommand(async obj =>
                 {
-                    (Application.Current as App).USERS = new List<UsersStructure>(Users);
+                    foreach (var user in Users)
+                    {
+                        user.Preset = setPreset(user);
+                    }
                     UsersUpdated?.Invoke(Users.ToList());
                     dbRequests db = new();
-                    db.DeleteAllRowsDb("Users");
-                    db.DeleteAllRowsDb("Answers");
+                    await Task.WhenAll(
+                        db.DeleteAllRowsDb("Users"),
+                        db.DeleteAllRowsDb("Answers")
+                    );
+
                     bool isSaved = true;
                     foreach (var user in Users)
                     {
-                        db.AddDBUsers(user);
+                        await db.AddDBUsersAsync(user);
+
                         foreach (var answ in user.Answers)
                         {
-                            db.AddDBAnsw(answ);
+                            await db.AddDBAnswAsync(answ);
                         }
                     }
+
                     if (isSaved)
                     {
                         MessageBox.Show("Пользователи сохранены!");
@@ -122,6 +130,15 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
             }
         }
 
+        private string setPreset(UsersStructure user)
+        {
+            string result = string.Join("/", user.Answers
+                .Where(answer => answer.IsUsed)
+                .OrderBy(answer => answer.Priority)
+                .ThenBy(answer => answer.Id)
+                .Select(answer => answer.Id));
+            return result;
+        }
 
         public SettingsViewModel(List<UsersStructure> users)
         {

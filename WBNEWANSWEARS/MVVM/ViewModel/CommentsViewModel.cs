@@ -13,6 +13,8 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
 {
     class CommentsViewModel : Core.ViewModel
     {
+        public delegate void UsersUpdatedByCommentsEventHandler();
+        public event UsersUpdatedByCommentsEventHandler UsersByCommentsUpdated;
         private ObservableCollection<UsersStructure> _users;
         public ObservableCollection<UsersStructure> Users
         {
@@ -64,19 +66,12 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
             {
                 return addAnsw ??= new RelayCommand(obj =>
                 {
-                    AnswersStructure _ = new AnswersStructure(GetLastId(SelectedUser.Answers), "Новый шаблон", 9, false, "", "", SelectedUser.Id);
+                    AnswersStructure _ = new AnswersStructure("Новый шаблон", 9, false, "", "", SelectedUser.Id);
                     Answers.Add(_);
                     SelectedUser.Answers = Answers.ToList();
                 }, obj => SelectedUser != null);
             }
         }
-
-        private int GetLastId(List<AnswersStructure> answ)
-        {
-            int res = answ.Count + 1;
-            return res;
-        }
-
         public RelayCommand RemoveAnsw
         {
             get
@@ -87,7 +82,6 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
                     {
                         Answers.Remove(SelectedAnswer);
                     }
-
                     SelectedUser.Answers = Answers.ToList();
                 }, obj => SelectedUser != null && SelectedAnswer != null);
             }
@@ -96,21 +90,25 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
         {
             get
             {
-                return saveAnsw ??= new RelayCommand(obj =>
+                return saveAnsw ??= new RelayCommand(async obj =>
                 {
-                    (Application.Current as App).USERS = new List<UsersStructure>(Users);
                     dbRequests db = new();
-                    db.DeleteAllRowsDb("Users");
-                    db.DeleteAllRowsDb("Answers");
+                    await Task.WhenAll(
+                        db.DeleteAllRowsDb("Users"),
+                        db.DeleteAllRowsDb("Answers")
+                    );
+
                     bool isSaved = true;
                     foreach (var user in Users)
                     {
-                        db.AddDBUsers(user);
+                        await db.AddDBUsersAsync(user);
+
                         foreach (var answ in user.Answers)
                         {
-                            db.AddDBAnsw(answ);
+                            await db.AddDBAnswAsync(answ);
                         }
                     }
+                    UsersByCommentsUpdated?.Invoke();
                     if (isSaved)
                     {
                         MessageBox.Show("Шаблоны сохранены!");
@@ -123,7 +121,6 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
                 }, obj => Users != null);
             }
         }
-
 
         public CommentsViewModel(List<UsersStructure> users)
         {

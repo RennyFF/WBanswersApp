@@ -43,9 +43,8 @@ namespace ConsoleApp1
         public string TargetRating { get; set; }
         public string Text { get; set; }
         public int UserId { get; set; }
-        public AnswersStructure(int id, string title, int priority, bool isUsed, string targetRating, string text, int userId)
+        public AnswersStructure(string title, int priority, bool isUsed, string targetRating, string text, int userId)
         {
-            Id = id;
             Title = title;
             Priority = priority;
             IsUsed = isUsed;

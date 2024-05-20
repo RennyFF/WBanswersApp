@@ -57,11 +57,11 @@ namespace ConsoleApp1
 
             return result;
         }
-        public bool AddDBUsers(UsersStructure user)
+        public async Task<bool> AddDBUsersAsync(UsersStructure user)
         {
             using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
-                connection.Open();
+                await connection.OpenAsync();
 
                 SQLiteCommand command = new();
                 command.Connection = connection;
@@ -75,7 +75,7 @@ namespace ConsoleApp1
 
                 try
                 {
-                    command.ExecuteNonQuery();
+                    await command.ExecuteNonQueryAsync();
                     return true;
                 }
                 catch (SQLiteException e)
@@ -84,18 +84,18 @@ namespace ConsoleApp1
                 }
             }
         }
-        public bool DeleteAllRowsDb(string _dbname)
+        public async Task<bool> DeleteAllRowsDb(string _dbname)
         {
             using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
-                connection.Open();
+                await connection.OpenAsync();
 
                 SQLiteCommand command = new();
                 command.Connection = connection;
                 command.CommandText = $"DELETE FROM {_dbname};";
                 try
                 {
-                    command.ExecuteNonQuery();
+                    await command.ExecuteNonQueryAsync();
                     return true;
                 }
                 catch (SQLiteException e)
@@ -137,10 +137,10 @@ namespace ConsoleApp1
         {
             using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
-        connection.Open();
+            connection.Open();
                 SQLiteCommand command = new();
                 command.Connection = connection;
-                command.CommandText = $"CREATE TABLE IF NOT EXISTS {_AnswersName}(Id INTEGER NOT NULL PRIMARY KEY UNIQUE, Title TEXT, " +
+                command.CommandText = $"CREATE TABLE IF NOT EXISTS {_AnswersName}(Id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, Title TEXT, " +
                                       "Priority INTEGER, IsUsed INTEGER, TargetRating TEXT, Text TEXT, UserId INTEGER, FOREIGN KEY (UserId) REFERENCES Users(Id))";
                 try
                 {
@@ -183,16 +183,15 @@ namespace ConsoleApp1
 
             return result;
         }
-        public bool AddDBAnsw(AnswersStructure answer)
+        public async Task<bool> AddDBAnswAsync(AnswersStructure answer)
         {
             using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
-                connection.Open();
+                await connection.OpenAsync();
                 SQLiteCommand command = new();
                 command.Connection = connection;
-                command.CommandText = $"INSERT INTO Answers (Id, Title, Priority, IsUsed, TargetRating, Text, UserId) " +
-                                      $"VALUES (@Id, @Title, @Priority, @IsUsed, @TargetRating, @Text, @UserId)";
-                command.Parameters.AddWithValue("@Id", answer.Id);
+                command.CommandText = $"INSERT INTO Answers (Title, Priority, IsUsed, TargetRating, Text, UserId) " +
+                                      $"VALUES (@Title, @Priority, @IsUsed, @TargetRating, @Text, @UserId)";
                 command.Parameters.AddWithValue("@Title", answer.Title);
                 command.Parameters.AddWithValue("@Priority", answer.Priority);
                 command.Parameters.AddWithValue("@IsUsed", answer.IsUsed ? 1 : 0);
@@ -201,7 +200,7 @@ namespace ConsoleApp1
                 command.Parameters.AddWithValue("@UserId", answer.UserId);
                 try
                 {
-                    command.ExecuteNonQuery();
+                    await command.ExecuteNonQueryAsync();
                     return true;
                 }
                 catch (SQLiteException e)
