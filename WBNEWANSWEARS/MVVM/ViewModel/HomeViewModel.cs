@@ -1,7 +1,6 @@
-﻿using ConsoleApp1;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows;
+using WBNEWANSWEARS.MVVM.Model;
 
 namespace WBNEWANSWEARS.MVVM.ViewModel
 {

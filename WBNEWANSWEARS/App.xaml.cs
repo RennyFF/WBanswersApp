@@ -1,10 +1,7 @@
-﻿using ConsoleApp1;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
-using System.Configuration;
-using System.Data;
 using System.Windows;
-using System.Windows.Navigation;
+using WBNEWANSWEARS.MVVM.Model;
 using WBNEWANSWEARS.MVVM.ViewModel;
 using WBNEWANSWEARS.Services;
 using WBNEWANSWEARS.ViewModel;

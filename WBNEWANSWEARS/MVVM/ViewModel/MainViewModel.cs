@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WBNEWANSWEARS.Core;
+﻿using WBNEWANSWEARS.Core;
 using WBNEWANSWEARS.MVVM.ViewModel;
 using WBNEWANSWEARS.Services;
 
