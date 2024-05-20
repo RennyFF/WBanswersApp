@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+	  <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <ApplicationIcon>Resource\beautiful_flat-style_logo_desi.ico</ApplicationIcon>
     <StartupObject>WBNEWANSWEARS.App</StartupObject>
   </PropertyGroup>
