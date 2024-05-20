@@ -21,8 +21,8 @@
         MouseDown="UIElement_Border_MouseDown">
         <Border.Background>
             <LinearGradientBrush>
-                <GradientStop Offset="0.6" Color="#7469B6" />
-                <GradientStop Offset="1" Color="#69619B" />
+                <GradientStop Offset="0.6" Color="{StaticResource SecondaryBackroundColor}" />
+                <GradientStop Offset="1" Color="{StaticResource DarkBackgroundColor}" />
             </LinearGradientBrush>
         </Border.Background>
         <Grid>
@@ -40,8 +40,8 @@
                 Cursor="">
                 <Border.Background>
                     <LinearGradientBrush>
-                        <GradientStop Offset="0.6" Color="#8179B3" />
-                        <GradientStop Offset="1.5" Color="#69619B" />
+                        <GradientStop Offset="0.6" Color="{StaticResource PrimaryBackgroundColor}" />
+                        <GradientStop Offset="1.5" Color="{StaticResource DarkBackgroundColor}" />
                     </LinearGradientBrush>
                 </Border.Background>
 
@@ -65,8 +65,8 @@
                             Text="WBAS">
                             <TextBlock.Foreground>
                                 <RadialGradientBrush>
-                                    <GradientStop Color="#FFFFE6E6" />
-                                    <GradientStop Offset="1" Color="White" />
+                                    <GradientStop Color="{StaticResource PrimaryTextColor}" />
+                                    <GradientStop Offset="1" Color="{StaticResource WhiteColor}" />
                                 </RadialGradientBrush>
                             </TextBlock.Foreground>
                             <TextBlock.Effect>
@@ -80,7 +80,7 @@
                             FontSize="12"
                             FontStyle="Normal"
                             FontWeight="Bold"
-                            Foreground="#FFE6E6"
+                            Foreground="{StaticResource PrimaryText}"
                             Text="by Renny">
                             <TextBlock.Effect>
                                 <DropShadowEffect BlurRadius="5" Opacity="0" />
@@ -93,7 +93,7 @@
                             FontSize="10"
                             FontStyle="Normal"
                             FontWeight="Normal"
-                            Foreground="#FFE6E6"
+                            Foreground="{StaticResource PrimaryText}"
                             Text="ver 1.0.0">
                             <TextBlock.Effect>
                                 <DropShadowEffect BlurRadius="5" Opacity="0" />

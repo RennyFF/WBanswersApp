@@ -15,8 +15,8 @@
     <Border CornerRadius="12">
         <Border.Background>
             <LinearGradientBrush>
-                <GradientStop Offset="0.6" Color="#8179B3" />
-                <GradientStop Offset="1.5" Color="#69619B" />
+                <GradientStop Offset="0.6" Color="{StaticResource PrimaryBackgroundColor}" />
+                <GradientStop Offset="1.5" Color="{StaticResource DarkBackgroundColor}" />
             </LinearGradientBrush>
         </Border.Background>
         <Grid>
@@ -58,7 +58,7 @@
                                         Margin="12,5,5,5"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Foreground="#FFE6E6"
+                                        Foreground="{StaticResource PrimaryText}"
                                         Kind="BriefcaseAccount">
                                         <iconPacks:PackIconMaterial.Effect>
                                             <DropShadowEffect
@@ -121,7 +121,7 @@
                     Width="auto"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Background="#7469B6"
+                    Background="{StaticResource SecondaryBackround}"
                     CornerRadius="10"
                     Cursor="Hand">
                     <b:Interaction.Triggers>

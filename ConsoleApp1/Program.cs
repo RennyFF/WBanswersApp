@@ -4,6 +4,7 @@
     {
         static async Task Main(string[] args)
         {
+            API api = new API();
         }
     }
 }

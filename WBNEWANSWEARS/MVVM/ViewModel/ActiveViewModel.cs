@@ -9,6 +9,9 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
 {
     class ActiveViewModel : Core.ViewModel
     {
+        public API api = new();
+        public delegate void UsersAnsweredEventHandler();
+        public event UsersAnsweredEventHandler UsersAnswered;
         private ObservableCollection<UsersStructure> _users;
         public ObservableCollection<UsersStructure> Users
         {
@@ -50,19 +53,35 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
         {
             get
             {
-                return startAnswer ??= new RelayCommand(obj =>
+                return startAnswer ??= new RelayCommand(async obj =>
                 {
-                    if (UsersSelected.Count == 0)
+                    try
                     {
-                        MessageBox.Show("Пользователи не выбраны!", "Ошибка",
-                            MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                    else
-                    {
-                        foreach (UsersStructure item in UsersSelected)
+                        if (UsersSelected.Count == 0)
                         {
-                            MessageBox.Show($"{item.UserName} выбран!");
+                            MessageBox.Show("Пользователи не выбраны!", "Ошибка",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
                         }
+                        else
+                        {
+                            foreach (UsersStructure user in UsersSelected)
+                            {
+                                bool result = await api.ProcessUserFeedbacksAsync(user);
+                                if (result)
+                                {
+                                    MessageBox.Show($"Обработка отзывов для пользователя {user.UserName} завершена успешно.");
+                                }
+                                else
+                                {
+                                    MessageBox.Show($"Ошибка при обработке отзывов для пользователя {user.UserName}.");
+                                }
+                            }
+                            UsersAnswered?.Invoke();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Ошибка при обработке отзывов: {ex.Message}");
                     }
                 }, obj => UsersSelected != null);
             }
@@ -71,13 +90,27 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
         {
             get
             {
-                return startSingleAnswer ??= new RelayCommand(obj =>
+                return startSingleAnswer ??= new RelayCommand(async obj =>
                 {
                     if (obj is UsersStructure user)
                     {
-                        UsersStructure s = new UsersStructure();
-                        s = obj as UsersStructure;
-                        MessageBox.Show($"{s.UserName}");
+                        try
+                        {
+                            bool result = await api.ProcessUserFeedbacksAsync(user);
+                            if (result)
+                            {
+                                MessageBox.Show($"Отработка отзывов для пользователя {user.UserName} завершена успешно.");
+                                UsersAnswered?.Invoke();
+                            }
+                            else
+                            {
+                                MessageBox.Show($"Ошибка при обработке отзывов для пользователя {user.UserName}.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Ошибка при обработке отзывов: {ex.Message}");
+                        }
                     }
                 }, obj => UsersSelected != null);
             }
@@ -87,7 +120,7 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
         {
             get
             {
-                return selectAllUsersCommand ??= new RelayCommand(obj =>
+                return selectAllUsersCommand ??= new RelayCommand( obj =>
                 {
                     UsersSelected = new List<UsersStructure>(Users);
 
@@ -99,7 +132,7 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
                 }, obj => Users != null && Users.Count > 0);
             }
         }
-
+        
         public ActiveViewModel(List<UsersStructure> users)
         {
             Users = new ObservableCollection<UsersStructure>(users);

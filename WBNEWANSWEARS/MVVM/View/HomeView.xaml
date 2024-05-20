@@ -15,8 +15,8 @@
     <Border CornerRadius="12">
         <Border.Background>
             <LinearGradientBrush>
-                <GradientStop Offset="0.6" Color="#8179B3" />
-                <GradientStop Offset="1.5" Color="#69619B" />
+                <GradientStop Offset="0.6" Color="{StaticResource PrimaryBackgroundColor}" />
+                <GradientStop Offset="1.5" Color="{StaticResource DarkBackgroundColor}" />
             </LinearGradientBrush>
         </Border.Background>
         <Grid>
@@ -55,7 +55,7 @@
                                             Width="60"
                                             Height="60"
                                             HorizontalAlignment="Center"
-                                            Foreground="#FFE6E6"
+                                            Foreground="{StaticResource PrimaryText}"
                                             Kind="Account">
                                             <iconPacks:PackIconMaterial.Effect>
                                                 <DropShadowEffect
@@ -75,7 +75,7 @@
                                     <TextBlock
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Foreground="#FFE6E6">
+                                        Foreground="{StaticResource PrimaryText}">
                                         <Run Text="Не отвечено на" />
                                         <Bold>
                                             <Run Text="{Binding UnansweredCount}" />

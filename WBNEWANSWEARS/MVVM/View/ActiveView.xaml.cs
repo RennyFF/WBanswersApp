@@ -27,7 +27,6 @@ namespace WBNEWANSWEARS.MVVM.View
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
-            MessageBox.Show("ASD");
         }
     }
 }
