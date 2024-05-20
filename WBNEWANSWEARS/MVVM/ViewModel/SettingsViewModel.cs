@@ -37,9 +37,10 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
 
         public ObservableCollection<UsersStructure> Users
         {
-            set {
-            _users = value;
-            onPropertyChanged(nameof(Users));
+            set
+            {
+                _users = value;
+                onPropertyChanged(nameof(Users));
             }
             get => _users;
         }

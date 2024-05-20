@@ -113,6 +113,9 @@ namespace WBNEWANSWEARS
             commentsViewModel.UsersByCommentsUpdated += () =>
             {
                 USERS = getUsers();
+                homeViewModel.UpdateUsers(USERS);
+                commentsViewModel.Users = new ObservableCollection<UsersStructure>(USERS);
+                activeViewModel.Users = new ObservableCollection<UsersStructure>(USERS);
             };
             var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();

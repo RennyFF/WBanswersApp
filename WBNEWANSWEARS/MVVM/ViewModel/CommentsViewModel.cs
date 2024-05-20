@@ -32,7 +32,10 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
             {
                 _selectedUser = value;
                 onPropertyChanged(nameof(SelectedUser));
-                Answers = new ObservableCollection<AnswersStructure>(value.Answers);
+                if (SelectedUser != null)
+                {
+                    Answers = new ObservableCollection<AnswersStructure>(value.Answers);
+                }
             }
             get => _selectedUser;
         }

@@ -137,7 +137,7 @@
                             </StackPanel>
                             <StackPanel Height="197" Margin="0,12,0,0">
                                 <TextBlock Style="{StaticResource SettingsViewSmallGrayText}" Text="Использующиеся ответы" />
-                                <Border Height="197" Margin="15,2,0,12">
+                                <Border Height="176" Margin="15,2,0,12">
                                     <ListBox
                                         x:Name="AnswersList"
                                         d:ItemsSource="{d:SampleData ItemCount=15}"
@@ -185,8 +185,9 @@
                                                             Grid.Column="2"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center"
+                                                            Cursor="Hand"
                                                             IsChecked="{Binding IsUsed}"
-                                                            Style="{StaticResource SettingsCustomCheckBoxStyle}" Cursor="Hand" />
+                                                            Style="{StaticResource SettingsCustomCheckBoxStyle}" />
                                                     </Grid>
                                                 </Border>
                                             </DataTemplate>
