@@ -24,7 +24,7 @@ namespace WBNEWANSWEARS.MVVM.Model
                 {
                     string _NMURI = $"{CONTENT_URL}" + "content/v2/get/cards/list?locale=en";
 
-                    StringContent requestData = new("{\"settings\": {" +
+                    StringContent requestDataOrigin = new("{\"settings\": {" +
                         "\"cursor\": {" +
                         "\"limit\": 100" +
                         "}," +
@@ -37,12 +37,60 @@ namespace WBNEWANSWEARS.MVVM.Model
 
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authorization);
 
-                    var response = await client.PostAsync(_NMURI, requestData);
+                    var response = await client.PostAsync(_NMURI, requestDataOrigin);
 
                     if (response.IsSuccessStatusCode)
                     {
                         NMList nMList = new();
                         var responseJson  = response.Content.ReadFromJsonAsync<NMList>().Result;
+                        nMList = responseJson;
+                        while (nMList.cursor.total == 100)
+                        {
+                            NMList _tempList = await SendPostRequestNMListOverLimit(authorization, nMList.cursor);
+                            nMList.cursor = _tempList.cursor;
+                            nMList.cards.AddRange(_tempList.cards);
+                        }
+
+                        return nMList;
+                    }
+                    return null;
+                }
+                catch (Exception ex)
+                {
+                    return null;
+                }
+            }
+        }
+        public async Task<NMList> SendPostRequestNMListOverLimit(string authorization, Cursor cursor)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    string _NMURI = $"{CONTENT_URL}" + "content/v2/get/cards/list?locale=en";
+
+
+                    StringContent requestDataIfOverLimit = new("{\"settings\": {" +
+                                                                    "\"cursor\": {" +
+                                                                        "\"limit\": 100," +
+                                                                        $"\"updatedAt\": \"{cursor.updatedAt}\"," +
+                                                                        $"\"nmID\": {cursor.nmID},"+
+                                                                        $"\"total\": {cursor.total}," +
+                                                                    "}," +
+                                                                    "\"filter\": {" +
+                                                                        "\"withPhoto\": -1}" +
+                                                                    "}" +
+                                                               "}",
+                        Encoding.UTF8,
+                        "application/json");
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authorization);
+
+                    var response = await client.PostAsync(_NMURI, requestDataIfOverLimit);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        NMList nMList = new();
+                        var responseJson = response.Content.ReadFromJsonAsync<NMList>().Result;
                         nMList = responseJson;
                         return nMList;
                     }

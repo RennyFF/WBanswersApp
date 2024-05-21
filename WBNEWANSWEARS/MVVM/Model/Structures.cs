@@ -61,7 +61,15 @@ namespace WBNEWANSWEARS.MVVM.Model
     public class NMList
     {
         public List<Card> cards { get; set; }
+        public Cursor cursor { get; set; }
     }
+
+    public class Cursor
+    {
+        public string updatedAt { get; set; }
+        public long nmID { get; set; }
+        public int total { get; set; }
+}
 
     public class Card
     {
