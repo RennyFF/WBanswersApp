@@ -71,16 +71,12 @@ namespace WBNEWANSWEARS.MVVM.Model
 
 
                     StringContent requestDataIfOverLimit = new("{\"settings\": {" +
-                                                                    "\"cursor\": {" +
-                                                                        "\"limit\": 100," +
-                                                                        $"\"updatedAt\": \"{cursor.updatedAt}\"," +
-                                                                        $"\"nmID\": {cursor.nmID},"+
-                                                                        $"\"total\": {cursor.total}," +
-                                                                    "}," +
                                                                     "\"filter\": {" +
-                                                                        "\"withPhoto\": -1}" +
-                                                                    "}" +
-                                                               "}",
+                                                                        "\"withPhoto\": -1 }," +
+                                                                    "\"cursor\": {" +
+                                                                    $"\"updatedAt\": \"{cursor.updatedAt}\"," +
+                                                                    $"\"nmID\": {cursor.nmID}," +
+                                                                    $"\"limit\": 100 }}}}}}",
                         Encoding.UTF8,
                         "application/json");
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", authorization);

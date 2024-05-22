@@ -63,19 +63,19 @@ namespace WBNEWANSWEARS
             var homeViewModel = _serviceProvider.GetRequiredService<HomeViewModel>();
             var activeViewModel = _serviceProvider.GetRequiredService<ActiveViewModel>();
             var commentsViewModel = _serviceProvider.GetRequiredService<CommentsViewModel>();
-            settingsViewModel.UsersUpdated += (updatedUsers) =>
+            settingsViewModel.UsersUpdated += () =>
             {
-                USERS = updatedUsers;
-                homeViewModel.UpdateUsers(updatedUsers);
-                commentsViewModel.Users = new ObservableCollection<UsersStructure>(updatedUsers);
-                activeViewModel.Users = new ObservableCollection<UsersStructure>(updatedUsers);
+                USERS = getUsers();
+                homeViewModel.UpdateUsers(USERS);
+                commentsViewModel.Users = new ObservableCollection<UsersStructure>(USERS);
+                activeViewModel.Users = new ObservableCollection<UsersStructure>(USERS);
 
             };
             commentsViewModel.UsersByCommentsUpdated += () =>
             {
                 USERS = getUsers();
                 homeViewModel.UpdateUsers(USERS);
-                commentsViewModel.Users = new ObservableCollection<UsersStructure>(USERS);
+                settingsViewModel.Users = new ObservableCollection<UsersStructure>(USERS);
                 activeViewModel.Users = new ObservableCollection<UsersStructure>(USERS);
             };
             activeViewModel.UsersAnswered += () =>
@@ -92,7 +92,21 @@ namespace WBNEWANSWEARS
             List<UsersStructure> _tmpUsers = getAllUsersFromDB();
             List<AnswersStructure> _tmpAnswers = getAllAnswersFromDB();
             var Users = PopulateUsersWithAnswers(_tmpUsers, _tmpAnswers);
+            foreach (var user in Users)
+            {
+                user.Preset = setPreset(user);
+            }
             return Users;
+        }
+
+        private string setPreset(UsersStructure user)
+        {
+            string result = string.Join("/", user.Answers
+                .Where(answer => answer.IsUsed)
+                .OrderBy(answer => answer.Priority)
+                .ThenBy(answer => answer.Id)
+                .Select(answer => answer.Id));
+            return result;
         }
         private List<UsersStructure> getAllUsersFromDB()
         {

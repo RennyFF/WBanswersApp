@@ -14,7 +14,7 @@ namespace WBNEWANSWEARS.MVVM.Model
                 connection.Open();
                 SQLiteCommand command = new();
                 command.Connection = connection;
-                command.CommandText = $"CREATE TABLE IF NOT EXISTS {_UsersName}(Id INTEGER NOT NULL PRIMARY KEY UNIQUE, UserName TEXT, " +
+                command.CommandText = $"CREATE TABLE IF NOT EXISTS {_UsersName}(Id INTEGER NOT NULL PRIMARY KEY, UserName TEXT, " +
                                       "TokenContent TEXT, TokenFeedBack TEXT, Preset TEXT)";
                 try
                 {

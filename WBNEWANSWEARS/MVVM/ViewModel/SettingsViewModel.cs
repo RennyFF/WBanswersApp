@@ -7,7 +7,7 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
 {
     class SettingsViewModel : Core.ViewModel
     {
-        public delegate void UsersUpdatedEventHandler(List<UsersStructure> updatedUsers);
+        public delegate void UsersUpdatedEventHandler();
         public event UsersUpdatedEventHandler UsersUpdated;
         private ObservableCollection<int> priorityNumbers = new ObservableCollection<int>()
         {
@@ -67,7 +67,7 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
 
         private int GetLastId(List<UsersStructure> users)
         {
-            int res = users.Count + 1;
+            int res = users.Last().Id + 1;
             return res;
         }
 
@@ -90,11 +90,6 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
             {
                 return saveUser ??= new RelayCommand(async obj =>
                 {
-                    foreach (var user in Users)
-                    {
-                        user.Preset = setPreset(user);
-                    }
-                    UsersUpdated?.Invoke(Users.ToList());
                     dbRequests db = new();
                     await Task.WhenAll(
                         db.DeleteAllRowsDb("Users"),
@@ -111,7 +106,7 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
                             await db.AddDBAnswAsync(answ);
                         }
                     }
-
+                    UsersUpdated?.Invoke();
                     if (isSaved)
                     {
                         MessageBox.Show("Пользователи сохранены!");
@@ -123,16 +118,6 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
                     }
                 }, obj => Users != null);
             }
-        }
-
-        private string setPreset(UsersStructure user)
-        {
-            string result = string.Join("/", user.Answers
-                .Where(answer => answer.IsUsed)
-                .OrderBy(answer => answer.Priority)
-                .ThenBy(answer => answer.Id)
-                .Select(answer => answer.Id));
-            return result;
         }
 
         public SettingsViewModel(List<UsersStructure> users)
