@@ -106,14 +106,14 @@ namespace WBNEWANSWEARS.MVVM.Model
         }
 
 
-        public bool UpdateDBUser(UsersStructure user)
+        public async Task<bool> UpdateDBUser(UsersStructure user)
         {
             using (var connection = new SQLiteConnection($"Data Source={_connectionString}"))
             {
                 connection.Open();
 
                 SQLiteCommand command = new(connection);
-                command.CommandText = $"UPDATE Users SET UserName = @UserName, TokenContent = @TokenContent, TokenFeedback = @TokenFeedback, Preset = @Preset WHERE Id = @Id";
+                command.CommandText = $"UPDATE {_UsersName} SET UserName = @UserName, TokenContent = @TokenContent, TokenFeedback = @TokenFeedback, Preset = @Preset WHERE Id = @Id";
 
                 command.Parameters.AddWithValue("@UserName", user.UserName);
                 command.Parameters.AddWithValue("@TokenContent", user.TokenContent);
@@ -123,7 +123,7 @@ namespace WBNEWANSWEARS.MVVM.Model
 
                 try
                 {
-                    command.ExecuteNonQuery();
+                    await command.ExecuteNonQueryAsync();
                     return true;
                 }
                 catch (SQLiteException e)

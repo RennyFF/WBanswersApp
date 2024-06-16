@@ -67,8 +67,15 @@ namespace WBNEWANSWEARS.MVVM.ViewModel
 
         private int GetLastId(List<UsersStructure> users)
         {
-            int res = users.Last().Id + 1;
-            return res;
+            try
+            {
+                int res = users.Last().Id + 1;
+                return res;
+            }
+            catch (Exception ex)
+            {
+                return 1;
+            }
         }
 
         public RelayCommand RemoveUser

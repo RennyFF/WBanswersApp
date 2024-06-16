@@ -74,7 +74,6 @@ namespace WBNEWANSWEARS
             commentsViewModel.UsersByCommentsUpdated += () =>
             {
                 USERS = getUsers();
-                homeViewModel.UpdateUsers(USERS);
                 settingsViewModel.Users = new ObservableCollection<UsersStructure>(USERS);
                 activeViewModel.Users = new ObservableCollection<UsersStructure>(USERS);
             };
@@ -95,6 +94,7 @@ namespace WBNEWANSWEARS
             foreach (var user in Users)
             {
                 user.Preset = setPreset(user);
+                _ = db.UpdateDBUser(user);
             }
             return Users;
         }

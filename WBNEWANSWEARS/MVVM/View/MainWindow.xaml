@@ -94,7 +94,7 @@
                             FontStyle="Normal"
                             FontWeight="Normal"
                             Foreground="{StaticResource PrimaryText}"
-                            Text="ver 1.0.0">
+                            Text="ver 1.0.1">
                             <TextBlock.Effect>
                                 <DropShadowEffect BlurRadius="5" Opacity="0" />
                             </TextBlock.Effect>
